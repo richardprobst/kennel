@@ -1,0 +1,29 @@
+{
+	"name": "canil-admin",
+	"version": "1.0.0",
+	"description": "Canil Core Admin Interface",
+	"scripts": {
+		"build": "wp-scripts build --webpack-src-dir=assets-admin-src/src --output-path=assets-admin",
+		"dev": "wp-scripts start --webpack-src-dir=assets-admin-src/src --output-path=assets-admin",
+		"lint": "wp-scripts lint-js assets-admin-src/src",
+		"lint:fix": "wp-scripts lint-js assets-admin-src/src --fix",
+		"test": "wp-scripts test-unit-js"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^7.0.0",
+		"@wordpress/components": "^28.0.0",
+		"@wordpress/data": "^10.0.0",
+		"@wordpress/element": "^6.0.0",
+		"@wordpress/i18n": "^5.0.0",
+		"@wordpress/url": "^4.0.0",
+		"react": "^18.3.0",
+		"react-dom": "^18.3.0",
+		"react-router-dom": "^6.22.0"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^28.0.0"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}

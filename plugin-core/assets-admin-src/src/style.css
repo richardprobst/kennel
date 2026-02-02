@@ -1,0 +1,149 @@
+/**
+ * Canil Admin Styles.
+ *
+ * @package CanilCore
+ */
+
+.canil-dashboard {
+	padding: 20px 0;
+}
+
+.canil-dashboard h1 {
+	margin-bottom: 20px;
+}
+
+.canil-dashboard-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 20px;
+}
+
+.canil-dashboard-cards .components-card {
+	margin: 0;
+}
+
+.canil-dashboard-cards .components-card h2 {
+	margin: 0;
+	font-size: 16px;
+}
+
+.canil-dashboard-cards .components-card p {
+	margin: 0 0 15px;
+	color: #666;
+}
+
+/* Page Header */
+.canil-page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.canil-page-header h1 {
+	margin: 0;
+}
+
+/* Filters */
+.canil-filters {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+}
+
+.canil-filters .components-search-control {
+	flex: 1;
+	min-width: 200px;
+}
+
+.canil-filters .components-select-control {
+	min-width: 150px;
+}
+
+/* Loading */
+.canil-loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 200px;
+}
+
+/* Empty State */
+.canil-empty-state {
+	text-align: center;
+	padding: 40px 20px;
+	color: #666;
+}
+
+.canil-empty-state p {
+	margin-bottom: 20px;
+}
+
+/* Table */
+.canil-dog-list table {
+	margin-top: 0;
+}
+
+.canil-call-name {
+	color: #666;
+	font-style: italic;
+	margin-left: 5px;
+}
+
+/* Pagination */
+.canil-pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #ddd;
+}
+
+/* Form */
+.canil-dog-form .components-card {
+	margin-bottom: 20px;
+}
+
+.canil-dog-form .components-card h2 {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.canil-form-row {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 15px;
+}
+
+.canil-form-row > * {
+	flex: 1;
+}
+
+.canil-form-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+	.canil-page-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.canil-filters {
+		flex-direction: column;
+	}
+
+	.canil-form-row {
+		flex-direction: column;
+		gap: 0;
+	}
+}
