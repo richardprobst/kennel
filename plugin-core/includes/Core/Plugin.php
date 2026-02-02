@@ -72,6 +72,10 @@ class Plugin {
 		// Register Events controller.
 		$events_controller = new \CanilCore\Rest\Controllers\EventsController();
 		$events_controller->register_routes();
+
+		// Register Reproduction controller.
+		$reproduction_controller = new \CanilCore\Rest\Controllers\ReproductionController();
+		$reproduction_controller->register_routes();
 	}
 
 	/**
