@@ -245,7 +245,60 @@ Todo PR deve incluir:
 
 ---
 
-## 14) Como pedir ajuda ao Copilot (Claude) de forma eficiente
+## 14) Princípios de Desenvolvimento (DRY, SOLID, KISS)
+
+### 14.1 DRY (Don't Repeat Yourself)
+
+- **Código duplicado = código errado**: Extrair para funções/classes/traits
+- **Usar classes base**: `BaseRepository`, `BaseController`, `BaseEntity`
+- **Constantes centralizadas**: Ver `Constants/` (DogStatus, LitterStatus, etc.)
+- **Helpers reutilizáveis**: Ver `Helpers/` (Sanitizer, Validator, DateHelper)
+- **Componentes React reutilizáveis**: Ver `components/common/`
+
+### 14.2 SOLID
+
+| Princípio | Aplicação |
+|-----------|-----------|
+| Single Responsibility | Controllers roteiam, Services processam, Repositories persistem |
+| Open/Closed | Usar hooks/filters para extensão, não modificar código base |
+| Liskov Substitution | Interfaces bem definidas |
+| Interface Segregation | Contracts pequenos e específicos |
+| Dependency Inversion | Injeção de dependência |
+
+### 14.3 KISS (Keep It Simple)
+
+- Preferir soluções simples que funcionam
+- Código legível > código "esperto"
+- Complexidade só quando necessária
+
+### 14.4 Anti-Patterns a Evitar
+
+- **Magic numbers/strings**: Usar constantes
+- **God classes**: Separar responsabilidades
+- **Código duplicado**: Extrair para funções/classes
+- **tenant_id do cliente**: SEMPRE do servidor
+
+---
+
+## 15) Documentação Obrigatória
+
+Ver pasta `docs/` para documentação completa:
+
+| Documento | Descrição |
+|-----------|-----------|
+| [PRD.md](docs/PRD.md) | Requisitos do produto |
+| [ARQUITETURA.md](docs/ARQUITETURA.md) | Arquitetura técnica |
+| [ROADMAP.md](docs/ROADMAP.md) | Plano de implementação |
+| [DB.md](docs/DB.md) | Modelo de dados |
+| [API.md](docs/API.md) | Especificação REST |
+| [UX.md](docs/UX.md) | Guia de interface |
+| [PADROES.md](docs/PADROES.md) | **Padrões de desenvolvimento (DRY, SOLID)** |
+| [SEGURANCA.md](docs/SEGURANCA.md) | **Guia de segurança detalhado** |
+| [MELHORIAS.md](docs/MELHORIAS.md) | Sugestões de melhorias |
+
+---
+
+## 16) Como pedir ajuda ao Copilot (Claude) de forma eficiente
 
 Ao abrir Issue/PR, descreva sempre:
 - Contexto e objetivo
