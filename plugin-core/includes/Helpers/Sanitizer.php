@@ -170,9 +170,9 @@ class Sanitizer {
 	/**
 	 * Sanitize an enum value.
 	 *
-	 * @param mixed        $value   Value to sanitize.
+	 * @param mixed         $value   Value to sanitize.
 	 * @param array<string> $allowed Allowed values.
-	 * @param string|null  $default Default value if not in allowed.
+	 * @param string|null   $default Default value if not in allowed.
 	 * @return string|null Sanitized value or default.
 	 */
 	public static function enum( mixed $value, array $allowed, ?string $default = null ): ?string {

@@ -225,7 +225,7 @@ abstract class BaseRepository {
 		$tenant_id = $this->get_tenant_id();
 
 		// Force tenant_id from server.
-		$data['tenant_id'] = $tenant_id;
+		$data['tenant_id']  = $tenant_id;
 		$data['created_at'] = current_time( 'mysql' );
 		$data['updated_at'] = current_time( 'mysql' );
 

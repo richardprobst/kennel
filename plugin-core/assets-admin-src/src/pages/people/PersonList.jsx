@@ -1,5 +1,5 @@
 /**
- * Dog List Page.
+ * Person List Page.
  *
  * @package
  */
@@ -19,37 +19,31 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 
 /**
- * DogList component.
+ * PersonList component.
  *
- * @return {JSX.Element} The dog list component.
+ * @return {JSX.Element} The person list component.
  */
-function DogList() {
+function PersonList() {
 	const navigate = useNavigate();
-	const [ dogs, setDogs ] = useState( [] );
+	const [ people, setPeople ] = useState( [] );
 	const [ loading, setLoading ] = useState( true );
 	const [ error, setError ] = useState( null );
 	const [ search, setSearch ] = useState( '' );
-	const [ statusFilter, setStatusFilter ] = useState( '' );
-	const [ sexFilter, setSexFilter ] = useState( '' );
+	const [ typeFilter, setTypeFilter ] = useState( '' );
 	const [ page, setPage ] = useState( 1 );
 	const [ totalPages, setTotalPages ] = useState( 1 );
 
-	const statusOptions = [
+	const typeOptions = [
 		{ label: __( 'Todos', 'canil-core' ), value: '' },
-		{ label: __( 'Ativo', 'canil-core' ), value: 'active' },
-		{ label: __( 'Reprodutor(a)', 'canil-core' ), value: 'breeding' },
-		{ label: __( 'Aposentado', 'canil-core' ), value: 'retired' },
-		{ label: __( 'Vendido', 'canil-core' ), value: 'sold' },
-		{ label: __( 'Falecido', 'canil-core' ), value: 'deceased' },
+		{ label: __( 'Interessado', 'canil-core' ), value: 'interested' },
+		{ label: __( 'Comprador', 'canil-core' ), value: 'buyer' },
+		{ label: __( 'Veterinário', 'canil-core' ), value: 'veterinarian' },
+		{ label: __( 'Handler', 'canil-core' ), value: 'handler' },
+		{ label: __( 'Parceiro', 'canil-core' ), value: 'partner' },
+		{ label: __( 'Outro', 'canil-core' ), value: 'other' },
 	];
 
-	const sexOptions = [
-		{ label: __( 'Todos', 'canil-core' ), value: '' },
-		{ label: __( 'Macho', 'canil-core' ), value: 'male' },
-		{ label: __( 'Fêmea', 'canil-core' ), value: 'female' },
-	];
-
-	const fetchDogs = useCallback( async () => {
+	const fetchPeople = useCallback( async () => {
 		setLoading( true );
 		setError( null );
 
@@ -62,37 +56,37 @@ function DogList() {
 			if ( search ) {
 				params.append( 'search', search );
 			}
-			if ( statusFilter ) {
-				params.append( 'status', statusFilter );
-			}
-			if ( sexFilter ) {
-				params.append( 'sex', sexFilter );
+			if ( typeFilter ) {
+				params.append( 'type', typeFilter );
 			}
 
 			const response = await apiFetch( {
-				path: `/canil/v1/dogs?${ params.toString() }`,
+				path: `/canil/v1/people?${ params.toString() }`,
 			} );
 
-			setDogs( response.data || [] );
+			setPeople( response.data || [] );
 			setTotalPages( response.meta?.total_pages || 1 );
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao carregar cães.', 'canil-core' )
+				err.message || __( 'Erro ao carregar pessoas.', 'canil-core' )
 			);
 		} finally {
 			setLoading( false );
 		}
-	}, [ search, statusFilter, sexFilter, page ] );
+	}, [ search, typeFilter, page ] );
 
 	useEffect( () => {
-		fetchDogs();
-	}, [ fetchDogs ] );
+		fetchPeople();
+	}, [ fetchPeople ] );
 
 	const handleDelete = async ( id ) => {
 		if (
 			// eslint-disable-next-line no-alert
 			! window.confirm(
-				__( 'Tem certeza que deseja excluir este cão?', 'canil-core' )
+				__(
+					'Tem certeza que deseja excluir esta pessoa?',
+					'canil-core'
+				)
 			)
 		) {
 			return;
@@ -100,26 +94,31 @@ function DogList() {
 
 		try {
 			await apiFetch( {
-				path: `/canil/v1/dogs/${ id }`,
+				path: `/canil/v1/people/${ id }`,
 				method: 'DELETE',
 			} );
-			fetchDogs();
+			fetchPeople();
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao excluir cão.', 'canil-core' )
+				err.message || __( 'Erro ao excluir pessoa.', 'canil-core' )
 			);
 		}
 	};
 
+	const getTypeLabel = ( type ) => {
+		const option = typeOptions.find( ( opt ) => opt.value === type );
+		return option ? option.label : type;
+	};
+
 	return (
-		<div className="canil-dog-list">
+		<div className="canil-person-list">
 			<div className="canil-page-header">
-				<h1>{ __( 'Cães', 'canil-core' ) }</h1>
+				<h1>{ __( 'Pessoas', 'canil-core' ) }</h1>
 				<Button
 					variant="primary"
-					onClick={ () => navigate( '/dogs/new' ) }
+					onClick={ () => navigate( '/people/new' ) }
 				>
-					{ __( 'Adicionar Cão', 'canil-core' ) }
+					{ __( 'Adicionar Pessoa', 'canil-core' ) }
 				</Button>
 			</div>
 
@@ -132,16 +131,10 @@ function DogList() {
 							onChange={ setSearch }
 						/>
 						<SelectControl
-							label={ __( 'Status', 'canil-core' ) }
-							value={ statusFilter }
-							options={ statusOptions }
-							onChange={ setStatusFilter }
-						/>
-						<SelectControl
-							label={ __( 'Sexo', 'canil-core' ) }
-							value={ sexFilter }
-							options={ sexOptions }
-							onChange={ setSexFilter }
+							label={ __( 'Tipo', 'canil-core' ) }
+							value={ typeFilter }
+							options={ typeOptions }
+							onChange={ setTypeFilter }
 						/>
 					</div>
 
@@ -156,74 +149,73 @@ function DogList() {
 							<Spinner />
 						</div>
 					) }
-					{ ! loading && dogs.length === 0 && (
+
+					{ ! loading && people.length === 0 && (
 						<div className="canil-empty-state">
 							<p>
-								{ __( 'Nenhum cão encontrado.', 'canil-core' ) }
+								{ __(
+									'Nenhuma pessoa encontrada.',
+									'canil-core'
+								) }
 							</p>
 							<Button
 								variant="primary"
-								onClick={ () => navigate( '/dogs/new' ) }
+								onClick={ () => navigate( '/people/new' ) }
 							>
-								{ __( 'Adicionar Primeiro Cão', 'canil-core' ) }
+								{ __(
+									'Adicionar Primeira Pessoa',
+									'canil-core'
+								) }
 							</Button>
 						</div>
 					) }
-					{ ! loading && dogs.length > 0 && (
+
+					{ ! loading && people.length > 0 && (
 						<>
 							<table className="wp-list-table widefat fixed striped">
 								<thead>
 									<tr>
 										<th>{ __( 'Nome', 'canil-core' ) }</th>
-										<th>{ __( 'Raça', 'canil-core' ) }</th>
-										<th>{ __( 'Sexo', 'canil-core' ) }</th>
+										<th>{ __( 'Tipo', 'canil-core' ) }</th>
 										<th>
-											{ __( 'Status', 'canil-core' ) }
+											{ __( 'E-mail', 'canil-core' ) }
 										</th>
 										<th>
-											{ __( 'Nascimento', 'canil-core' ) }
+											{ __( 'Telefone', 'canil-core' ) }
+										</th>
+										<th>
+											{ __( 'Cidade', 'canil-core' ) }
 										</th>
 										<th>{ __( 'Ações', 'canil-core' ) }</th>
 									</tr>
 								</thead>
 								<tbody>
-									{ dogs.map( ( dog ) => (
-										<tr key={ dog.id }>
+									{ people.map( ( person ) => (
+										<tr key={ person.id }>
 											<td>
 												<Link
-													to={ `/dogs/${ dog.id }` }
+													to={ `/people/${ person.id }` }
 												>
 													<strong>
-														{ dog.name }
+														{ person.name }
 													</strong>
 												</Link>
-												{ dog.call_name && (
-													<span className="canil-call-name">
-														({ dog.call_name })
-													</span>
-												) }
 											</td>
-											<td>{ dog.breed }</td>
 											<td>
-												{ dog.sex === 'male'
-													? __(
-															'Macho',
-															'canil-core'
-													  )
-													: __(
-															'Fêmea',
-															'canil-core'
-													  ) }
+												{ getTypeLabel( person.type ) }
 											</td>
-											<td>{ dog.status }</td>
-											<td>{ dog.birth_date }</td>
+											<td>{ person.email || '-' }</td>
+											<td>{ person.phone || '-' }</td>
+											<td>
+												{ person.address_city || '-' }
+											</td>
 											<td>
 												<Button
 													variant="secondary"
 													size="small"
 													onClick={ () =>
 														navigate(
-															`/dogs/${ dog.id }`
+															`/people/${ person.id }`
 														)
 													}
 												>
@@ -237,7 +229,9 @@ function DogList() {
 													size="small"
 													isDestructive
 													onClick={ () =>
-														handleDelete( dog.id )
+														handleDelete(
+															person.id
+														)
 													}
 												>
 													{ __(
@@ -282,4 +276,4 @@ function DogList() {
 	);
 }
 
-export default DogList;
+export default PersonList;

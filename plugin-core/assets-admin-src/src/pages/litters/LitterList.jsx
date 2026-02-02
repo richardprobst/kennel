@@ -1,5 +1,5 @@
 /**
- * Dog List Page.
+ * Litter List Page.
  *
  * @package
  */
@@ -19,37 +19,32 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 
 /**
- * DogList component.
+ * LitterList component.
  *
- * @return {JSX.Element} The dog list component.
+ * @return {JSX.Element} The litter list component.
  */
-function DogList() {
+function LitterList() {
 	const navigate = useNavigate();
-	const [ dogs, setDogs ] = useState( [] );
+	const [ litters, setLitters ] = useState( [] );
 	const [ loading, setLoading ] = useState( true );
 	const [ error, setError ] = useState( null );
 	const [ search, setSearch ] = useState( '' );
 	const [ statusFilter, setStatusFilter ] = useState( '' );
-	const [ sexFilter, setSexFilter ] = useState( '' );
 	const [ page, setPage ] = useState( 1 );
 	const [ totalPages, setTotalPages ] = useState( 1 );
 
 	const statusOptions = [
 		{ label: __( 'Todos', 'canil-core' ), value: '' },
-		{ label: __( 'Ativo', 'canil-core' ), value: 'active' },
-		{ label: __( 'Reprodutor(a)', 'canil-core' ), value: 'breeding' },
-		{ label: __( 'Aposentado', 'canil-core' ), value: 'retired' },
-		{ label: __( 'Vendido', 'canil-core' ), value: 'sold' },
-		{ label: __( 'Falecido', 'canil-core' ), value: 'deceased' },
+		{ label: __( 'Planejada', 'canil-core' ), value: 'planned' },
+		{ label: __( 'Confirmada', 'canil-core' ), value: 'confirmed' },
+		{ label: __( 'Prenhe', 'canil-core' ), value: 'pregnant' },
+		{ label: __( 'Nascida', 'canil-core' ), value: 'born' },
+		{ label: __( 'Desmamada', 'canil-core' ), value: 'weaned' },
+		{ label: __( 'Encerrada', 'canil-core' ), value: 'closed' },
+		{ label: __( 'Cancelada', 'canil-core' ), value: 'cancelled' },
 	];
 
-	const sexOptions = [
-		{ label: __( 'Todos', 'canil-core' ), value: '' },
-		{ label: __( 'Macho', 'canil-core' ), value: 'male' },
-		{ label: __( 'Fêmea', 'canil-core' ), value: 'female' },
-	];
-
-	const fetchDogs = useCallback( async () => {
+	const fetchLitters = useCallback( async () => {
 		setLoading( true );
 		setError( null );
 
@@ -65,34 +60,34 @@ function DogList() {
 			if ( statusFilter ) {
 				params.append( 'status', statusFilter );
 			}
-			if ( sexFilter ) {
-				params.append( 'sex', sexFilter );
-			}
 
 			const response = await apiFetch( {
-				path: `/canil/v1/dogs?${ params.toString() }`,
+				path: `/canil/v1/litters?${ params.toString() }`,
 			} );
 
-			setDogs( response.data || [] );
+			setLitters( response.data || [] );
 			setTotalPages( response.meta?.total_pages || 1 );
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao carregar cães.', 'canil-core' )
+				err.message || __( 'Erro ao carregar ninhadas.', 'canil-core' )
 			);
 		} finally {
 			setLoading( false );
 		}
-	}, [ search, statusFilter, sexFilter, page ] );
+	}, [ search, statusFilter, page ] );
 
 	useEffect( () => {
-		fetchDogs();
-	}, [ fetchDogs ] );
+		fetchLitters();
+	}, [ fetchLitters ] );
 
 	const handleDelete = async ( id ) => {
 		if (
 			// eslint-disable-next-line no-alert
 			! window.confirm(
-				__( 'Tem certeza que deseja excluir este cão?', 'canil-core' )
+				__(
+					'Tem certeza que deseja excluir esta ninhada?',
+					'canil-core'
+				)
 			)
 		) {
 			return;
@@ -100,26 +95,31 @@ function DogList() {
 
 		try {
 			await apiFetch( {
-				path: `/canil/v1/dogs/${ id }`,
+				path: `/canil/v1/litters/${ id }`,
 				method: 'DELETE',
 			} );
-			fetchDogs();
+			fetchLitters();
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao excluir cão.', 'canil-core' )
+				err.message || __( 'Erro ao excluir ninhada.', 'canil-core' )
 			);
 		}
 	};
 
+	const getStatusLabel = ( status ) => {
+		const option = statusOptions.find( ( opt ) => opt.value === status );
+		return option ? option.label : status;
+	};
+
 	return (
-		<div className="canil-dog-list">
+		<div className="canil-litter-list">
 			<div className="canil-page-header">
-				<h1>{ __( 'Cães', 'canil-core' ) }</h1>
+				<h1>{ __( 'Ninhadas', 'canil-core' ) }</h1>
 				<Button
 					variant="primary"
-					onClick={ () => navigate( '/dogs/new' ) }
+					onClick={ () => navigate( '/litters/new' ) }
 				>
-					{ __( 'Adicionar Cão', 'canil-core' ) }
+					{ __( 'Adicionar Ninhada', 'canil-core' ) }
 				</Button>
 			</div>
 
@@ -137,12 +137,6 @@ function DogList() {
 							options={ statusOptions }
 							onChange={ setStatusFilter }
 						/>
-						<SelectControl
-							label={ __( 'Sexo', 'canil-core' ) }
-							value={ sexFilter }
-							options={ sexOptions }
-							onChange={ setSexFilter }
-						/>
 					</div>
 
 					{ error && (
@@ -156,74 +150,94 @@ function DogList() {
 							<Spinner />
 						</div>
 					) }
-					{ ! loading && dogs.length === 0 && (
+
+					{ ! loading && litters.length === 0 && (
 						<div className="canil-empty-state">
 							<p>
-								{ __( 'Nenhum cão encontrado.', 'canil-core' ) }
+								{ __(
+									'Nenhuma ninhada encontrada.',
+									'canil-core'
+								) }
 							</p>
 							<Button
 								variant="primary"
-								onClick={ () => navigate( '/dogs/new' ) }
+								onClick={ () => navigate( '/litters/new' ) }
 							>
-								{ __( 'Adicionar Primeiro Cão', 'canil-core' ) }
+								{ __(
+									'Adicionar Primeira Ninhada',
+									'canil-core'
+								) }
 							</Button>
 						</div>
 					) }
-					{ ! loading && dogs.length > 0 && (
+
+					{ ! loading && litters.length > 0 && (
 						<>
 							<table className="wp-list-table widefat fixed striped">
 								<thead>
 									<tr>
-										<th>{ __( 'Nome', 'canil-core' ) }</th>
-										<th>{ __( 'Raça', 'canil-core' ) }</th>
-										<th>{ __( 'Sexo', 'canil-core' ) }</th>
+										<th>
+											{ __( 'Nome/Letra', 'canil-core' ) }
+										</th>
 										<th>
 											{ __( 'Status', 'canil-core' ) }
 										</th>
 										<th>
-											{ __( 'Nascimento', 'canil-core' ) }
+											{ __(
+												'Data Cobertura',
+												'canil-core'
+											) }
+										</th>
+										<th>
+											{ __(
+												'Data Prevista',
+												'canil-core'
+											) }
+										</th>
+										<th>
+											{ __( 'Nascidos', 'canil-core' ) }
 										</th>
 										<th>{ __( 'Ações', 'canil-core' ) }</th>
 									</tr>
 								</thead>
 								<tbody>
-									{ dogs.map( ( dog ) => (
-										<tr key={ dog.id }>
+									{ litters.map( ( litter ) => (
+										<tr key={ litter.id }>
 											<td>
 												<Link
-													to={ `/dogs/${ dog.id }` }
+													to={ `/litters/${ litter.id }` }
 												>
 													<strong>
-														{ dog.name }
+														{ litter.name ||
+															litter.litter_letter ||
+															`#${ litter.id }` }
 													</strong>
 												</Link>
-												{ dog.call_name && (
-													<span className="canil-call-name">
-														({ dog.call_name })
-													</span>
+											</td>
+											<td>
+												{ getStatusLabel(
+													litter.status
 												) }
 											</td>
-											<td>{ dog.breed }</td>
 											<td>
-												{ dog.sex === 'male'
-													? __(
-															'Macho',
-															'canil-core'
-													  )
-													: __(
-															'Fêmea',
-															'canil-core'
-													  ) }
+												{ litter.mating_date || '-' }
 											</td>
-											<td>{ dog.status }</td>
-											<td>{ dog.birth_date }</td>
+											<td>
+												{ litter.expected_birth_date ||
+													'-' }
+											</td>
+											<td>
+												{ litter.puppies_born_count > 0
+													? `${ litter.puppies_alive_count }/${ litter.puppies_born_count }`
+													: '-' }
+											</td>
 											<td>
 												<Button
 													variant="secondary"
 													size="small"
 													onClick={ () =>
 														navigate(
-															`/dogs/${ dog.id }`
+															`/litters/${ litter.id }`
 														)
 													}
 												>
@@ -237,7 +251,9 @@ function DogList() {
 													size="small"
 													isDestructive
 													onClick={ () =>
-														handleDelete( dog.id )
+														handleDelete(
+															litter.id
+														)
 													}
 												>
 													{ __(
@@ -282,4 +298,4 @@ function DogList() {
 	);
 }
 
-export default DogList;
+export default LitterList;

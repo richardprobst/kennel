@@ -110,6 +110,7 @@ class DateHelper {
 	 * @param \DateTimeInterface|string $mating_date Mating date.
 	 * @param int                       $days        Gestation days (default 63).
 	 * @return \DateTimeImmutable Expected birth date.
+	 * @throws \InvalidArgumentException If the mating date is invalid.
 	 */
 	public static function calculate_expected_birth(
 		\DateTimeInterface|string $mating_date,

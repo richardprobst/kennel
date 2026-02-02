@@ -35,8 +35,8 @@ class Litter extends BaseEntity {
 	/**
 	 * Mating type constants.
 	 */
-	public const MATING_NATURAL          = 'natural';
-	public const MATING_ARTIFICIAL_FRESH = 'artificial_fresh';
+	public const MATING_NATURAL           = 'natural';
+	public const MATING_ARTIFICIAL_FRESH  = 'artificial_fresh';
 	public const MATING_ARTIFICIAL_FROZEN = 'artificial_frozen';
 
 	/**

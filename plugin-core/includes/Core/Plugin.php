@@ -57,7 +57,21 @@ class Plugin {
 		$dogs_controller = new \CanilCore\Rest\Controllers\DogsController();
 		$dogs_controller->register_routes();
 
-		// Additional controllers will be registered here.
+		// Register Litters controller.
+		$litters_controller = new \CanilCore\Rest\Controllers\LittersController();
+		$litters_controller->register_routes();
+
+		// Register Puppies controller.
+		$puppies_controller = new \CanilCore\Rest\Controllers\PuppiesController();
+		$puppies_controller->register_routes();
+
+		// Register People controller.
+		$people_controller = new \CanilCore\Rest\Controllers\PeopleController();
+		$people_controller->register_routes();
+
+		// Register Events controller.
+		$events_controller = new \CanilCore\Rest\Controllers\EventsController();
+		$events_controller->register_routes();
 	}
 
 	/**
@@ -139,7 +153,7 @@ class Plugin {
 	 */
 	public function enqueue_admin_assets( string $hook_suffix ): void {
 		// Only load on our admin pages.
-		if ( strpos( $hook_suffix, 'canil-' ) === false && $hook_suffix !== 'toplevel_page_canil-dashboard' ) {
+		if ( false === strpos( $hook_suffix, 'canil-' ) && 'toplevel_page_canil-dashboard' !== $hook_suffix ) {
 			return;
 		}
 
@@ -168,8 +182,8 @@ class Plugin {
 				'canil-admin',
 				'canilAdmin',
 				array(
-					'apiUrl'  => rest_url( 'canil/v1' ),
-					'nonce'   => wp_create_nonce( 'wp_rest' ),
+					'apiUrl'   => rest_url( 'canil/v1' ),
+					'nonce'    => wp_create_nonce( 'wp_rest' ),
 					'adminUrl' => admin_url(),
 				)
 			);

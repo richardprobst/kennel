@@ -1,5 +1,5 @@
 /**
- * Dog Form Page.
+ * Puppy Form Page.
  *
  * @package
  */
@@ -21,11 +21,11 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 
 /**
- * DogForm component for creating/editing dogs.
+ * PuppyForm component for creating/editing puppies.
  *
- * @return {JSX.Element} The dog form component.
+ * @return {JSX.Element} The puppy form component.
  */
-function DogForm() {
+function PuppyForm() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const isEditing = Boolean( id );
@@ -34,32 +34,33 @@ function DogForm() {
 	const [ saving, setSaving ] = useState( false );
 	const [ error, setError ] = useState( null );
 	const [ success, setSuccess ] = useState( null );
+	const [ litters, setLitters ] = useState( [] );
 
 	const [ formData, setFormData ] = useState( {
+		litter_id: '',
+		identifier: '',
 		name: '',
 		call_name: '',
 		registration_number: '',
 		chip_number: '',
-		tattoo: '',
-		breed: '',
-		variety: '',
+		sex: 'male',
 		color: '',
 		markings: '',
-		birth_date: '',
-		sex: 'male',
-		status: 'active',
-		sire_id: '',
-		dam_id: '',
+		birth_weight: '',
+		birth_order: '',
+		birth_notes: '',
+		status: 'available',
+		price: '',
 		notes: '',
 	} );
 
 	const statusOptions = [
-		{ label: __( 'Ativo', 'canil-core' ), value: 'active' },
-		{ label: __( 'Reprodutor(a)', 'canil-core' ), value: 'breeding' },
-		{ label: __( 'Aposentado', 'canil-core' ), value: 'retired' },
+		{ label: __( 'Disponível', 'canil-core' ), value: 'available' },
+		{ label: __( 'Reservado', 'canil-core' ), value: 'reserved' },
 		{ label: __( 'Vendido', 'canil-core' ), value: 'sold' },
+		{ label: __( 'Retido', 'canil-core' ), value: 'retained' },
 		{ label: __( 'Falecido', 'canil-core' ), value: 'deceased' },
-		{ label: __( 'Co-propriedade', 'canil-core' ), value: 'coowned' },
+		{ label: __( 'Devolvido', 'canil-core' ), value: 'returned' },
 	];
 
 	const sexOptions = [
@@ -67,35 +68,48 @@ function DogForm() {
 		{ label: __( 'Fêmea', 'canil-core' ), value: 'female' },
 	];
 
-	const fetchDog = useCallback( async () => {
+	const fetchLitters = useCallback( async () => {
+		try {
+			const response = await apiFetch( {
+				path: '/canil/v1/litters/dropdown',
+			} );
+			setLitters( response.data || [] );
+		} catch ( err ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Error fetching litters:', err );
+		}
+	}, [] );
+
+	const fetchPuppy = useCallback( async () => {
 		setLoading( true );
 		setError( null );
 
 		try {
 			const response = await apiFetch( {
-				path: `/canil/v1/dogs/${ id }`,
+				path: `/canil/v1/puppies/${ id }`,
 			} );
 
+			const data = response.data || {};
 			setFormData( {
-				name: response.data?.name || '',
-				call_name: response.data?.call_name || '',
-				registration_number: response.data?.registration_number || '',
-				chip_number: response.data?.chip_number || '',
-				tattoo: response.data?.tattoo || '',
-				breed: response.data?.breed || '',
-				variety: response.data?.variety || '',
-				color: response.data?.color || '',
-				markings: response.data?.markings || '',
-				birth_date: response.data?.birth_date || '',
-				sex: response.data?.sex || 'male',
-				status: response.data?.status || 'active',
-				sire_id: response.data?.sire_id || '',
-				dam_id: response.data?.dam_id || '',
-				notes: response.data?.notes || '',
+				litter_id: data.litter_id || '',
+				identifier: data.identifier || '',
+				name: data.name || '',
+				call_name: data.call_name || '',
+				registration_number: data.registration_number || '',
+				chip_number: data.chip_number || '',
+				sex: data.sex || 'male',
+				color: data.color || '',
+				markings: data.markings || '',
+				birth_weight: data.birth_weight || '',
+				birth_order: data.birth_order || '',
+				birth_notes: data.birth_notes || '',
+				status: data.status || 'available',
+				price: data.price || '',
+				notes: data.notes || '',
 			} );
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao carregar cão.', 'canil-core' )
+				err.message || __( 'Erro ao carregar filhote.', 'canil-core' )
 			);
 		} finally {
 			setLoading( false );
@@ -103,10 +117,11 @@ function DogForm() {
 	}, [ id ] );
 
 	useEffect( () => {
+		fetchLitters();
 		if ( isEditing ) {
-			fetchDog();
+			fetchPuppy();
 		}
-	}, [ isEditing, fetchDog ] );
+	}, [ isEditing, fetchLitters, fetchPuppy ] );
 
 	const handleChange = ( field ) => ( value ) => {
 		setFormData( ( prev ) => ( {
@@ -124,6 +139,11 @@ function DogForm() {
 		try {
 			const data = { ...formData };
 
+			// Convert IDs to integers.
+			if ( data.litter_id ) {
+				data.litter_id = parseInt( data.litter_id, 10 );
+			}
+
 			// Remove empty optional fields.
 			Object.keys( data ).forEach( ( key ) => {
 				if ( data[ key ] === '' ) {
@@ -133,23 +153,25 @@ function DogForm() {
 
 			if ( isEditing ) {
 				await apiFetch( {
-					path: `/canil/v1/dogs/${ id }`,
+					path: `/canil/v1/puppies/${ id }`,
 					method: 'PUT',
 					data,
 				} );
-				setSuccess( __( 'Cão atualizado com sucesso!', 'canil-core' ) );
+				setSuccess(
+					__( 'Filhote atualizado com sucesso!', 'canil-core' )
+				);
 			} else {
 				await apiFetch( {
-					path: '/canil/v1/dogs',
+					path: '/canil/v1/puppies',
 					method: 'POST',
 					data,
 				} );
-				setSuccess( __( 'Cão criado com sucesso!', 'canil-core' ) );
-				setTimeout( () => navigate( '/dogs' ), 1500 );
+				setSuccess( __( 'Filhote criado com sucesso!', 'canil-core' ) );
+				setTimeout( () => navigate( '/puppies' ), 1500 );
 			}
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao salvar cão.', 'canil-core' )
+				err.message || __( 'Erro ao salvar filhote.', 'canil-core' )
 			);
 		} finally {
 			setSaving( false );
@@ -164,17 +186,25 @@ function DogForm() {
 		);
 	}
 
+	const litterOptions = [
+		{ label: __( 'Selecione a ninhada…', 'canil-core' ), value: '' },
+		...litters.map( ( litter ) => ( {
+			label: litter.name || litter.litter_letter || `#${ litter.id }`,
+			value: litter.id.toString(),
+		} ) ),
+	];
+
 	return (
-		<div className="canil-dog-form">
+		<div className="canil-puppy-form">
 			<div className="canil-page-header">
 				<h1>
 					{ isEditing
-						? __( 'Editar Cão', 'canil-core' )
-						: __( 'Adicionar Cão', 'canil-core' ) }
+						? __( 'Editar Filhote', 'canil-core' )
+						: __( 'Adicionar Filhote', 'canil-core' ) }
 				</h1>
 				<Button
 					variant="secondary"
-					onClick={ () => navigate( '/dogs' ) }
+					onClick={ () => navigate( '/puppies' ) }
 				>
 					{ __( 'Voltar', 'canil-core' ) }
 				</Button>
@@ -207,11 +237,28 @@ function DogForm() {
 					</CardHeader>
 					<CardBody>
 						<div className="canil-form-row">
+							<SelectControl
+								label={ __( 'Ninhada *', 'canil-core' ) }
+								value={ formData.litter_id }
+								options={ litterOptions }
+								onChange={ handleChange( 'litter_id' ) }
+							/>
 							<TextControl
-								label={ __( 'Nome *', 'canil-core' ) }
+								label={ __( 'Identificador *', 'canil-core' ) }
+								value={ formData.identifier }
+								onChange={ handleChange( 'identifier' ) }
+								required
+								help={ __(
+									'Ex: Macho 1, Fêmea 2',
+									'canil-core'
+								) }
+							/>
+						</div>
+						<div className="canil-form-row">
+							<TextControl
+								label={ __( 'Nome Registrado', 'canil-core' ) }
 								value={ formData.name }
 								onChange={ handleChange( 'name' ) }
-								required
 							/>
 							<TextControl
 								label={ __( 'Nome de Chamada', 'canil-core' ) }
@@ -229,17 +276,11 @@ function DogForm() {
 								onChange={ handleChange(
 									'registration_number'
 								) }
-								help={ __( 'Ex: CBKC 12345', 'canil-core' ) }
 							/>
 							<TextControl
 								label={ __( 'Número do Chip', 'canil-core' ) }
 								value={ formData.chip_number }
 								onChange={ handleChange( 'chip_number' ) }
-							/>
-							<TextControl
-								label={ __( 'Tatuagem', 'canil-core' ) }
-								value={ formData.tattoo }
-								onChange={ handleChange( 'tattoo' ) }
 							/>
 						</div>
 					</CardBody>
@@ -250,35 +291,6 @@ function DogForm() {
 						<h2>{ __( 'Características', 'canil-core' ) }</h2>
 					</CardHeader>
 					<CardBody>
-						<div className="canil-form-row">
-							<TextControl
-								label={ __( 'Raça *', 'canil-core' ) }
-								value={ formData.breed }
-								onChange={ handleChange( 'breed' ) }
-								required
-							/>
-							<TextControl
-								label={ __( 'Variedade', 'canil-core' ) }
-								value={ formData.variety }
-								onChange={ handleChange( 'variety' ) }
-								help={ __(
-									'Ex: Pelo longo, Mini',
-									'canil-core'
-								) }
-							/>
-						</div>
-						<div className="canil-form-row">
-							<TextControl
-								label={ __( 'Cor', 'canil-core' ) }
-								value={ formData.color }
-								onChange={ handleChange( 'color' ) }
-							/>
-							<TextControl
-								label={ __( 'Marcações', 'canil-core' ) }
-								value={ formData.markings }
-								onChange={ handleChange( 'markings' ) }
-							/>
-						</div>
 						<div className="canil-form-row">
 							<SelectControl
 								label={ __( 'Sexo *', 'canil-core' ) }
@@ -295,14 +307,72 @@ function DogForm() {
 						</div>
 						<div className="canil-form-row">
 							<TextControl
+								label={ __( 'Cor', 'canil-core' ) }
+								value={ formData.color }
+								onChange={ handleChange( 'color' ) }
+							/>
+							<TextControl
+								label={ __( 'Marcações', 'canil-core' ) }
+								value={ formData.markings }
+								onChange={ handleChange( 'markings' ) }
+							/>
+						</div>
+					</CardBody>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<h2>{ __( 'Nascimento', 'canil-core' ) }</h2>
+					</CardHeader>
+					<CardBody>
+						<div className="canil-form-row">
+							<TextControl
 								label={ __(
-									'Data de Nascimento *',
+									'Peso ao Nascer (gramas)',
 									'canil-core'
 								) }
-								type="date"
-								value={ formData.birth_date }
-								onChange={ handleChange( 'birth_date' ) }
-								required
+								type="number"
+								min="0"
+								step="0.1"
+								value={ formData.birth_weight }
+								onChange={ handleChange( 'birth_weight' ) }
+							/>
+							<TextControl
+								label={ __(
+									'Ordem de Nascimento',
+									'canil-core'
+								) }
+								type="number"
+								min="1"
+								value={ formData.birth_order }
+								onChange={ handleChange( 'birth_order' ) }
+							/>
+						</div>
+						<TextareaControl
+							label={ __(
+								'Observações do Nascimento',
+								'canil-core'
+							) }
+							value={ formData.birth_notes }
+							onChange={ handleChange( 'birth_notes' ) }
+							rows={ 2 }
+						/>
+					</CardBody>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<h2>{ __( 'Venda', 'canil-core' ) }</h2>
+					</CardHeader>
+					<CardBody>
+						<div className="canil-form-row">
+							<TextControl
+								label={ __( 'Preço', 'canil-core' ) }
+								type="number"
+								min="0"
+								step="0.01"
+								value={ formData.price }
+								onChange={ handleChange( 'price' ) }
 							/>
 						</div>
 					</CardBody>
@@ -325,7 +395,7 @@ function DogForm() {
 				<div className="canil-form-actions">
 					<Button
 						variant="secondary"
-						onClick={ () => navigate( '/dogs' ) }
+						onClick={ () => navigate( '/puppies' ) }
 					>
 						{ __( 'Cancelar', 'canil-core' ) }
 					</Button>
@@ -341,7 +411,7 @@ function DogForm() {
 							__( 'Atualizar', 'canil-core' ) }
 						{ ! saving &&
 							! isEditing &&
-							__( 'Criar Cão', 'canil-core' ) }
+							__( 'Criar Filhote', 'canil-core' ) }
 					</Button>
 				</div>
 			</form>
@@ -349,4 +419,4 @@ function DogForm() {
 	);
 }
 
-export default DogForm;
+export default PuppyForm;
