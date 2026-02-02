@@ -8,6 +8,11 @@
 // Define test constants.
 define( 'CANIL_CORE_TESTING', true );
 
+// Define ABSPATH to allow loading plugin files outside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	define( 'ABSPATH', dirname( __DIR__ ) . '/' );
+}
+
 // Load Composer autoloader.
 $autoloader = dirname( __DIR__ ) . '/vendor/autoload.php';
 if ( file_exists( $autoloader ) ) {

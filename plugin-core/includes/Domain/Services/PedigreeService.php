@@ -45,7 +45,7 @@ class PedigreeService {
 	 * Get pedigree tree for a dog.
 	 *
 	 * @param int $dog_id     Dog ID.
-	 * @param int $generations Number of generations (3-5).
+	 * @param int $generations Number of generations (1-5).
 	 * @return array{dog: array<string, mixed>, pedigree: array<string, mixed>, generations: int}
 	 * @throws NotFoundException If dog not found.
 	 */
