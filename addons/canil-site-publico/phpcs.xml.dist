@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards for Canil Site Público">
+	<description>A custom set of rules for Canil Site Público add-on.</description>
+
+	<!-- What to scan -->
+	<file>.</file>
+
+	<!-- Exclude patterns -->
+	<exclude-pattern>/vendor/</exclude-pattern>
+	<exclude-pattern>/node_modules/</exclude-pattern>
+	<exclude-pattern>/assets/</exclude-pattern>
+
+	<!-- How to scan -->
+	<arg value="sp"/>
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="8"/>
+
+	<!-- Rules: Check PHP version compatibility -->
+	<config name="testVersion" value="8.1-"/>
+
+	<!-- Rules: WordPress Coding Standards -->
+	<rule ref="WordPress">
+		<!-- Exclude file naming rules since we use PSR-4 autoloading -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		
+		<!-- Exclude nonce verification for REST API controllers -->
+		<exclude name="WordPress.Security.NonceVerification"/>
+		
+		<!-- Allow short ternary when intentional -->
+		<exclude name="Universal.Operators.DisallowShortTernary"/>
+		
+		<!-- Allow exception messages without escaping -->
+		<exclude name="WordPress.Security.EscapeOutput.ExceptionNotEscaped"/>
+		
+		<!-- Allow reserved keywords as parameter names -->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+		
+		<!-- Allow unused function parameters (needed for interface compatibility) -->
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+	</rule>
+
+	<!-- Text domain for this add-on -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="canil-site-publico"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Register custom capabilities from core -->
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="manage_kennel"/>
+				<element value="manage_dogs"/>
+				<element value="manage_litters"/>
+				<element value="manage_puppies"/>
+				<element value="manage_people"/>
+				<element value="view_reports"/>
+				<element value="manage_settings"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Minimum WP version -->
+	<config name="minimum_supported_wp_version" value="6.0"/>
+
+</ruleset>
