@@ -57,7 +57,21 @@ class Plugin {
 		$dogs_controller = new \CanilCore\Rest\Controllers\DogsController();
 		$dogs_controller->register_routes();
 
-		// Additional controllers will be registered here.
+		// Register Litters controller.
+		$litters_controller = new \CanilCore\Rest\Controllers\LittersController();
+		$litters_controller->register_routes();
+
+		// Register Puppies controller.
+		$puppies_controller = new \CanilCore\Rest\Controllers\PuppiesController();
+		$puppies_controller->register_routes();
+
+		// Register People controller.
+		$people_controller = new \CanilCore\Rest\Controllers\PeopleController();
+		$people_controller->register_routes();
+
+		// Register Events controller.
+		$events_controller = new \CanilCore\Rest\Controllers\EventsController();
+		$events_controller->register_routes();
 	}
 
 	/**
