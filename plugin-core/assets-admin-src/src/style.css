@@ -147,3 +147,252 @@
 		gap: 0;
 	}
 }
+
+/* Canil Page */
+.canil-page {
+	padding: 20px 0;
+}
+
+.canil-page__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.canil-page__header h1 {
+	margin: 0;
+}
+
+/* Filters Card */
+.canil-filters.components-card {
+	margin-bottom: 20px;
+}
+
+.canil-filters__row {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	align-items: flex-end;
+}
+
+.canil-filters__row > * {
+	flex: 1;
+	min-width: 150px;
+}
+
+.canil-filters__actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 15px;
+}
+
+/* Pedigree Tree */
+.canil-pedigree-card {
+	margin-top: 20px;
+}
+
+.pedigree-tree {
+	overflow-x: auto;
+	padding: 20px;
+}
+
+.pedigree-root {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+.pedigree-children {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-left: 30px;
+	border-left: 2px solid #ddd;
+}
+
+.pedigree-branch {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.pedigree-node {
+	background: #f8f9fa;
+	border: 2px solid #e2e4e7;
+	border-radius: 8px;
+	padding: 12px 16px;
+	min-width: 150px;
+	text-align: center;
+	transition: box-shadow 0.2s;
+}
+
+.pedigree-node:hover {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pedigree-node--root {
+	background: #fff;
+	border-color: #007cba;
+	min-width: 180px;
+}
+
+.pedigree-node--male {
+	border-left: 4px solid #4a90d9;
+}
+
+.pedigree-node--female {
+	border-left: 4px solid #e4717a;
+}
+
+.pedigree-node--unknown {
+	background: #f0f0f0;
+	border-style: dashed;
+	color: #666;
+}
+
+.pedigree-node__role {
+	font-size: 11px;
+	color: #666;
+	text-transform: uppercase;
+	margin-bottom: 4px;
+}
+
+.pedigree-node__photo {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-bottom: 8px;
+}
+
+.pedigree-node__photo--large {
+	width: 80px;
+	height: 80px;
+}
+
+.pedigree-node__name {
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.pedigree-node__name a {
+	color: #007cba;
+	text-decoration: none;
+}
+
+.pedigree-node__name a:hover {
+	text-decoration: underline;
+}
+
+.pedigree-node__reg,
+.pedigree-node__breed {
+	font-size: 12px;
+	color: #666;
+}
+
+.pedigree-node__titles {
+	font-size: 11px;
+	color: #007cba;
+	margin-top: 4px;
+}
+
+/* Summary Cards */
+.canil-summary {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e2e4e7;
+}
+
+.canil-summary__item {
+	background: #f8f9fa;
+	padding: 12px 20px;
+	border-radius: 6px;
+	text-align: center;
+	min-width: 100px;
+}
+
+.canil-summary__label {
+	display: block;
+	font-size: 11px;
+	color: #666;
+	text-transform: uppercase;
+	margin-bottom: 4px;
+}
+
+.canil-summary__value {
+	display: block;
+	font-size: 24px;
+	font-weight: 600;
+	color: #1e1e1e;
+}
+
+/* Data Table */
+.canil-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+
+.canil-table th,
+.canil-table td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #e2e4e7;
+}
+
+.canil-table th {
+	background: #f8f9fa;
+	font-weight: 600;
+	font-size: 13px;
+	text-transform: uppercase;
+	color: #666;
+}
+
+.canil-table tr:hover td {
+	background: #f8f9fa;
+}
+
+/* Report Card */
+.canil-report {
+	margin-top: 20px;
+}
+
+.canil-report .components-card__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.canil-report .components-card__header h2 {
+	margin: 0;
+}
+
+.canil-report .components-card__header small {
+	color: #666;
+}
+
+.canil-report__data {
+	overflow-x: auto;
+}
+
+/* Responsive Pedigree */
+@media (max-width: 1024px) {
+	.pedigree-root {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.pedigree-children {
+		padding-left: 20px;
+	}
+
+	.pedigree-branch {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+

@@ -88,6 +88,14 @@ class Plugin {
 		// Register Calendar controller.
 		$calendar_controller = new \CanilCore\Rest\Controllers\CalendarController();
 		$calendar_controller->register_routes();
+
+		// Register Pedigree controller.
+		$pedigree_controller = new \CanilCore\Rest\Controllers\PedigreeController();
+		$pedigree_controller->register_routes();
+
+		// Register Reports controller.
+		$reports_controller = new \CanilCore\Rest\Controllers\ReportsController();
+		$reports_controller->register_routes();
 	}
 
 	/**
@@ -178,6 +186,24 @@ class Plugin {
 			__( 'Agenda', 'canil-core' ),
 			'manage_kennel',
 			'canil-calendar',
+			array( $this, 'render_admin_page' )
+		);
+
+		add_submenu_page(
+			'canil-dashboard',
+			__( 'Pedigree', 'canil-core' ),
+			__( 'Pedigree', 'canil-core' ),
+			'manage_dogs',
+			'canil-pedigree',
+			array( $this, 'render_admin_page' )
+		);
+
+		add_submenu_page(
+			'canil-dashboard',
+			__( 'Relatórios', 'canil-core' ),
+			__( 'Relatórios', 'canil-core' ),
+			'view_reports',
+			'canil-reports',
 			array( $this, 'render_admin_page' )
 		);
 	}
