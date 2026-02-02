@@ -18,6 +18,10 @@ import MatingForm from './pages/reproduction/MatingForm';
 import BirthForm from './pages/reproduction/BirthForm';
 import HealthList from './pages/health/HealthList';
 import HealthForm from './pages/health/HealthForm';
+import WeighingList from './pages/weighing/WeighingList';
+import WeighingForm from './pages/weighing/WeighingForm';
+import BatchWeighing from './pages/weighing/BatchWeighing';
+import WeightChart from './pages/weighing/WeightChart';
 
 /**
  * App component with routing.
@@ -49,6 +53,13 @@ function App() {
 				<Route path="/health" element={ <HealthList /> } />
 				<Route path="/health/new" element={ <HealthForm /> } />
 				<Route path="/health/:id" element={ <HealthForm /> } />
+				<Route path="/weighing" element={ <WeighingList /> } />
+				<Route path="/weighing/new" element={ <WeighingForm /> } />
+				<Route path="/weighing/batch" element={ <BatchWeighing /> } />
+				<Route
+					path="/weighing/chart/:entityType/:entityId"
+					element={ <WeightChart /> }
+				/>
 				<Route path="*" element={ <Navigate to="/" replace /> } />
 			</Routes>
 		</HashRouter>

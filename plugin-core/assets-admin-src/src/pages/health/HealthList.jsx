@@ -73,11 +73,14 @@ function HealthList() {
 	const fetchStats = useCallback( async () => {
 		setStatsLoading( true );
 		try {
-			const [ vaccinesRes, dewormingsRes, overdueRes ] = await Promise.all( [
-				apiFetch( { path: '/canil/v1/health/upcoming-vaccines' } ),
-				apiFetch( { path: '/canil/v1/health/upcoming-dewormings' } ),
-				apiFetch( { path: '/canil/v1/health/overdue' } ),
-			] );
+			const [ vaccinesRes, dewormingsRes, overdueRes ] =
+				await Promise.all( [
+					apiFetch( { path: '/canil/v1/health/upcoming-vaccines' } ),
+					apiFetch( {
+						path: '/canil/v1/health/upcoming-dewormings',
+					} ),
+					apiFetch( { path: '/canil/v1/health/overdue' } ),
+				] );
 
 			setStats( {
 				upcomingVaccines: vaccinesRes.meta?.total || 0,
@@ -121,16 +124,24 @@ function HealthList() {
 			} );
 
 			// Filter to only health-related events.
-			const healthTypes = [ 'vaccine', 'deworming', 'exam', 'medication', 'surgery', 'vet_visit' ];
-			const healthEvents = ( response.data || [] ).filter(
-				( event ) => healthTypes.includes( event.event_type )
+			const healthTypes = [
+				'vaccine',
+				'deworming',
+				'exam',
+				'medication',
+				'surgery',
+				'vet_visit',
+			];
+			const healthEvents = ( response.data || [] ).filter( ( event ) =>
+				healthTypes.includes( event.event_type )
 			);
 
 			setEvents( healthEvents );
 			setTotalPages( response.meta?.total_pages || 1 );
 		} catch ( err ) {
 			setError(
-				err.message || __( 'Erro ao carregar eventos de saúde.', 'canil-core' )
+				err.message ||
+					__( 'Erro ao carregar eventos de saúde.', 'canil-core' )
 			);
 		} finally {
 			setLoading( false );
@@ -149,7 +160,10 @@ function HealthList() {
 		if (
 			// eslint-disable-next-line no-alert
 			! window.confirm(
-				__( 'Tem certeza que deseja excluir este evento?', 'canil-core' )
+				__(
+					'Tem certeza que deseja excluir este evento?',
+					'canil-core'
+				)
 			)
 		) {
 			return;
@@ -218,7 +232,11 @@ function HealthList() {
 				<Card className="canil-stat-card canil-stat-warning">
 					<CardBody>
 						<div className="canil-stat-value">
-							{ statsLoading ? <Spinner /> : stats.upcomingVaccines }
+							{ statsLoading ? (
+								<Spinner />
+							) : (
+								stats.upcomingVaccines
+							) }
 						</div>
 						<div className="canil-stat-label">
 							{ __( 'Vacinas Próximas', 'canil-core' ) }
@@ -228,7 +246,11 @@ function HealthList() {
 				<Card className="canil-stat-card canil-stat-info">
 					<CardBody>
 						<div className="canil-stat-value">
-							{ statsLoading ? <Spinner /> : stats.upcomingDewormings }
+							{ statsLoading ? (
+								<Spinner />
+							) : (
+								stats.upcomingDewormings
+							) }
 						</div>
 						<div className="canil-stat-label">
 							{ __( 'Vermífugos Próximos', 'canil-core' ) }
@@ -256,13 +278,17 @@ function HealthList() {
 					{ __( 'Todos', 'canil-core' ) }
 				</Button>
 				<Button
-					variant={ typeFilter === 'vaccine' ? 'primary' : 'secondary' }
+					variant={
+						typeFilter === 'vaccine' ? 'primary' : 'secondary'
+					}
 					onClick={ () => handleTypeFilterClick( 'vaccine' ) }
 				>
 					{ __( 'Vacinas', 'canil-core' ) }
 				</Button>
 				<Button
-					variant={ typeFilter === 'deworming' ? 'primary' : 'secondary' }
+					variant={
+						typeFilter === 'deworming' ? 'primary' : 'secondary'
+					}
 					onClick={ () => handleTypeFilterClick( 'deworming' ) }
 				>
 					{ __( 'Vermífugos', 'canil-core' ) }
@@ -274,13 +300,17 @@ function HealthList() {
 					{ __( 'Exames', 'canil-core' ) }
 				</Button>
 				<Button
-					variant={ typeFilter === 'medication' ? 'primary' : 'secondary' }
+					variant={
+						typeFilter === 'medication' ? 'primary' : 'secondary'
+					}
 					onClick={ () => handleTypeFilterClick( 'medication' ) }
 				>
 					{ __( 'Medicamentos', 'canil-core' ) }
 				</Button>
 				<Button
-					variant={ typeFilter === 'surgery' ? 'primary' : 'secondary' }
+					variant={
+						typeFilter === 'surgery' ? 'primary' : 'secondary'
+					}
 					onClick={ () => handleTypeFilterClick( 'surgery' ) }
 				>
 					{ __( 'Cirurgias', 'canil-core' ) }
@@ -325,13 +355,19 @@ function HealthList() {
 					{ ! loading && events.length === 0 && (
 						<div className="canil-empty-state">
 							<p>
-								{ __( 'Nenhum evento de saúde encontrado.', 'canil-core' ) }
+								{ __(
+									'Nenhum evento de saúde encontrado.',
+									'canil-core'
+								) }
 							</p>
 							<Button
 								variant="primary"
 								onClick={ () => navigate( '/health/new' ) }
 							>
-								{ __( 'Adicionar Primeiro Evento', 'canil-core' ) }
+								{ __(
+									'Adicionar Primeiro Evento',
+									'canil-core'
+								) }
 							</Button>
 						</div>
 					) }
@@ -343,8 +379,12 @@ function HealthList() {
 									<tr>
 										<th>{ __( 'Data', 'canil-core' ) }</th>
 										<th>{ __( 'Tipo', 'canil-core' ) }</th>
-										<th>{ __( 'Animal', 'canil-core' ) }</th>
-										<th>{ __( 'Detalhes', 'canil-core' ) }</th>
+										<th>
+											{ __( 'Animal', 'canil-core' ) }
+										</th>
+										<th>
+											{ __( 'Detalhes', 'canil-core' ) }
+										</th>
 										<th>{ __( 'Ações', 'canil-core' ) }</th>
 									</tr>
 								</thead>
@@ -353,48 +393,79 @@ function HealthList() {
 										<tr key={ event.id }>
 											<td>{ event.event_date }</td>
 											<td>
-												<span className={ `canil-badge canil-badge-${ event.event_type }` }>
-													{ typeLabels[ event.event_type ] || event.event_type }
+												<span
+													className={ `canil-badge canil-badge-${ event.event_type }` }
+												>
+													{ typeLabels[
+														event.event_type
+													] || event.event_type }
 												</span>
 											</td>
 											<td>
-												{ event.entity_type === 'dog' && event.dog_name && (
-													<Link to={ `/dogs/${ event.entity_id }` }>
-														{ event.dog_name }
-													</Link>
-												) }
-												{ event.entity_type === 'puppy' && event.puppy_name && (
-													<Link to={ `/puppies/${ event.entity_id }` }>
-														{ event.puppy_name }
-													</Link>
-												) }
-												{ ! event.dog_name && ! event.puppy_name && (
-													<span>
-														{ event.entity_type === 'dog'
-															? __( 'Cão', 'canil-core' )
-															: __( 'Filhote', 'canil-core' ) }{ ' ' }
-														#{ event.entity_id }
-													</span>
-												) }
+												{ event.entity_type === 'dog' &&
+													event.dog_name && (
+														<Link
+															to={ `/dogs/${ event.entity_id }` }
+														>
+															{ event.dog_name }
+														</Link>
+													) }
+												{ event.entity_type ===
+													'puppy' &&
+													event.puppy_name && (
+														<Link
+															to={ `/puppies/${ event.entity_id }` }
+														>
+															{ event.puppy_name }
+														</Link>
+													) }
+												{ ! event.dog_name &&
+													! event.puppy_name && (
+														<span>
+															{ event.entity_type ===
+															'dog'
+																? __(
+																		'Cão',
+																		'canil-core'
+																  )
+																: __(
+																		'Filhote',
+																		'canil-core'
+																  ) }{ ' ' }
+															#{ event.entity_id }
+														</span>
+													) }
 											</td>
-											<td>{ formatEventDetails( event ) }</td>
+											<td>
+												{ formatEventDetails( event ) }
+											</td>
 											<td>
 												<Button
 													variant="secondary"
 													size="small"
 													onClick={ () =>
-														navigate( `/health/${ event.id }` )
+														navigate(
+															`/health/${ event.id }`
+														)
 													}
 												>
-													{ __( 'Editar', 'canil-core' ) }
+													{ __(
+														'Editar',
+														'canil-core'
+													) }
 												</Button>
 												<Button
 													variant="tertiary"
 													size="small"
 													isDestructive
-													onClick={ () => handleDelete( event.id ) }
+													onClick={ () =>
+														handleDelete( event.id )
+													}
 												>
-													{ __( 'Excluir', 'canil-core' ) }
+													{ __(
+														'Excluir',
+														'canil-core'
+													) }
 												</Button>
 											</td>
 										</tr>

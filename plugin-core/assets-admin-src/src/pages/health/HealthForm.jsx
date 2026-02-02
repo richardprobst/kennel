@@ -58,7 +58,10 @@ function HealthForm() {
 		{ label: __( 'Exame', 'canil-core' ), value: 'exam' },
 		{ label: __( 'Medicamento', 'canil-core' ), value: 'medication' },
 		{ label: __( 'Cirurgia', 'canil-core' ), value: 'surgery' },
-		{ label: __( 'Consulta Veterinária', 'canil-core' ), value: 'vet_visit' },
+		{
+			label: __( 'Consulta Veterinária', 'canil-core' ),
+			value: 'vet_visit',
+		},
 	];
 
 	const entityTypeOptions = [
@@ -76,17 +79,26 @@ function HealthForm() {
 			] );
 
 			const dogOptions = ( dogsRes.data || [] ).map( ( dog ) => ( {
-				label: dog.name + ( dog.call_name ? ` (${ dog.call_name })` : '' ),
+				label:
+					dog.name + ( dog.call_name ? ` (${ dog.call_name })` : '' ),
 				value: dog.id.toString(),
 			} ) );
-			dogOptions.unshift( { label: __( 'Selecione um cão', 'canil-core' ), value: '' } );
+			dogOptions.unshift( {
+				label: __( 'Selecione um cão', 'canil-core' ),
+				value: '',
+			} );
 			setDogs( dogOptions );
 
 			const puppyOptions = ( puppiesRes.data || [] ).map( ( puppy ) => ( {
-				label: puppy.name || `${ __( 'Filhote', 'canil-core' ) } #${ puppy.id }`,
+				label:
+					puppy.name ||
+					`${ __( 'Filhote', 'canil-core' ) } #${ puppy.id }`,
 				value: puppy.id.toString(),
 			} ) );
-			puppyOptions.unshift( { label: __( 'Selecione um filhote', 'canil-core' ), value: '' } );
+			puppyOptions.unshift( {
+				label: __( 'Selecione um filhote', 'canil-core' ),
+				value: '',
+			} );
 			setPuppies( puppyOptions );
 		} catch ( err ) {
 			setError(
@@ -206,7 +218,9 @@ function HealthForm() {
 						payload: formData.payload,
 					},
 				} );
-				setSuccess( __( 'Evento atualizado com sucesso!', 'canil-core' ) );
+				setSuccess(
+					__( 'Evento atualizado com sucesso!', 'canil-core' )
+				);
 			} else {
 				const endpoint = typeEndpoints[ formData.type ];
 				await apiFetch( {
@@ -246,7 +260,9 @@ function HealthForm() {
 							<TextControl
 								label={ __( 'Fabricante', 'canil-core' ) }
 								value={ formData.payload.manufacturer || '' }
-								onChange={ handlePayloadChange( 'manufacturer' ) }
+								onChange={ handlePayloadChange(
+									'manufacturer'
+								) }
 							/>
 						</div>
 						<div className="canil-form-row">
@@ -259,7 +275,9 @@ function HealthForm() {
 								label={ __( 'Próxima Dose', 'canil-core' ) }
 								type="date"
 								value={ formData.payload.next_dose_date || '' }
-								onChange={ handlePayloadChange( 'next_dose_date' ) }
+								onChange={ handlePayloadChange(
+									'next_dose_date'
+								) }
 							/>
 						</div>
 					</>
@@ -279,7 +297,10 @@ function HealthForm() {
 								label={ __( 'Dosagem', 'canil-core' ) }
 								value={ formData.payload.dosage || '' }
 								onChange={ handlePayloadChange( 'dosage' ) }
-								help={ __( 'Ex: 1 comprimido, 5ml', 'canil-core' ) }
+								help={ __(
+									'Ex: 1 comprimido, 5ml',
+									'canil-core'
+								) }
 							/>
 						</div>
 						<div className="canil-form-row">
@@ -287,7 +308,9 @@ function HealthForm() {
 								label={ __( 'Próxima Dose', 'canil-core' ) }
 								type="date"
 								value={ formData.payload.next_dose_date || '' }
-								onChange={ handlePayloadChange( 'next_dose_date' ) }
+								onChange={ handlePayloadChange(
+									'next_dose_date'
+								) }
 							/>
 						</div>
 					</>
@@ -302,12 +325,17 @@ function HealthForm() {
 								value={ formData.payload.exam_type || '' }
 								onChange={ handlePayloadChange( 'exam_type' ) }
 								required
-								help={ __( 'Ex: Hemograma, Raio-X, Ultrassom', 'canil-core' ) }
+								help={ __(
+									'Ex: Hemograma, Raio-X, Ultrassom',
+									'canil-core'
+								) }
 							/>
 							<TextControl
 								label={ __( 'Veterinário', 'canil-core' ) }
 								value={ formData.payload.veterinarian || '' }
-								onChange={ handlePayloadChange( 'veterinarian' ) }
+								onChange={ handlePayloadChange(
+									'veterinarian'
+								) }
 							/>
 						</div>
 						<div className="canil-form-row">
@@ -326,7 +354,10 @@ function HealthForm() {
 					<>
 						<div className="canil-form-row">
 							<TextControl
-								label={ __( 'Nome do Medicamento *', 'canil-core' ) }
+								label={ __(
+									'Nome do Medicamento *',
+									'canil-core'
+								) }
 								value={ formData.payload.name || '' }
 								onChange={ handlePayloadChange( 'name' ) }
 								required
@@ -335,7 +366,10 @@ function HealthForm() {
 								label={ __( 'Dosagem', 'canil-core' ) }
 								value={ formData.payload.dosage || '' }
 								onChange={ handlePayloadChange( 'dosage' ) }
-								help={ __( 'Ex: 500mg, 2 comprimidos', 'canil-core' ) }
+								help={ __(
+									'Ex: 500mg, 2 comprimidos',
+									'canil-core'
+								) }
 							/>
 						</div>
 						<div className="canil-form-row">
@@ -343,7 +377,10 @@ function HealthForm() {
 								label={ __( 'Frequência', 'canil-core' ) }
 								value={ formData.payload.frequency || '' }
 								onChange={ handlePayloadChange( 'frequency' ) }
-								help={ __( 'Ex: 2x ao dia, a cada 8 horas', 'canil-core' ) }
+								help={ __(
+									'Ex: 2x ao dia, a cada 8 horas',
+									'canil-core'
+								) }
 							/>
 							<TextControl
 								label={ __( 'Data Término', 'canil-core' ) }
@@ -360,16 +397,26 @@ function HealthForm() {
 					<>
 						<div className="canil-form-row">
 							<TextControl
-								label={ __( 'Tipo de Cirurgia *', 'canil-core' ) }
+								label={ __(
+									'Tipo de Cirurgia *',
+									'canil-core'
+								) }
 								value={ formData.payload.surgery_type || '' }
-								onChange={ handlePayloadChange( 'surgery_type' ) }
+								onChange={ handlePayloadChange(
+									'surgery_type'
+								) }
 								required
-								help={ __( 'Ex: Castração, Cesariana', 'canil-core' ) }
+								help={ __(
+									'Ex: Castração, Cesariana',
+									'canil-core'
+								) }
 							/>
 							<TextControl
 								label={ __( 'Veterinário', 'canil-core' ) }
 								value={ formData.payload.veterinarian || '' }
-								onChange={ handlePayloadChange( 'veterinarian' ) }
+								onChange={ handlePayloadChange(
+									'veterinarian'
+								) }
 							/>
 						</div>
 					</>
@@ -380,7 +427,10 @@ function HealthForm() {
 					<>
 						<div className="canil-form-row">
 							<TextControl
-								label={ __( 'Motivo da Consulta *', 'canil-core' ) }
+								label={ __(
+									'Motivo da Consulta *',
+									'canil-core'
+								) }
 								value={ formData.payload.reason || '' }
 								onChange={ handlePayloadChange( 'reason' ) }
 								required
@@ -388,7 +438,9 @@ function HealthForm() {
 							<TextControl
 								label={ __( 'Veterinário', 'canil-core' ) }
 								value={ formData.payload.veterinarian || '' }
-								onChange={ handlePayloadChange( 'veterinarian' ) }
+								onChange={ handlePayloadChange(
+									'veterinarian'
+								) }
 							/>
 						</div>
 						<div className="canil-form-row">
@@ -412,7 +464,9 @@ function HealthForm() {
 								label={ __( 'Próxima Consulta', 'canil-core' ) }
 								type="date"
 								value={ formData.payload.next_visit_date || '' }
-								onChange={ handlePayloadChange( 'next_visit_date' ) }
+								onChange={ handlePayloadChange(
+									'next_visit_date'
+								) }
 							/>
 						</div>
 					</>
@@ -512,9 +566,7 @@ function HealthForm() {
 					<CardHeader>
 						<h2>{ __( 'Detalhes do Evento', 'canil-core' ) }</h2>
 					</CardHeader>
-					<CardBody>
-						{ renderTypeSpecificFields() }
-					</CardBody>
+					<CardBody>{ renderTypeSpecificFields() }</CardBody>
 				</Card>
 
 				<Card>
