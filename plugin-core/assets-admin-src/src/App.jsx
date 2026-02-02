@@ -22,6 +22,7 @@ import WeighingList from './pages/weighing/WeighingList';
 import WeighingForm from './pages/weighing/WeighingForm';
 import BatchWeighing from './pages/weighing/BatchWeighing';
 import WeightChart from './pages/weighing/WeightChart';
+import Calendar from './pages/calendar/Calendar';
 
 /**
  * App component with routing.
@@ -60,6 +61,7 @@ function App() {
 					path="/weighing/chart/:entityType/:entityId"
 					element={ <WeightChart /> }
 				/>
+				<Route path="/calendar" element={ <Calendar /> } />
 				<Route path="*" element={ <Navigate to="/" replace /> } />
 			</Routes>
 		</HashRouter>
