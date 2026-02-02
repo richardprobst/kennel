@@ -23,6 +23,8 @@ import WeighingForm from './pages/weighing/WeighingForm';
 import BatchWeighing from './pages/weighing/BatchWeighing';
 import WeightChart from './pages/weighing/WeightChart';
 import Calendar from './pages/calendar/Calendar';
+import PedigreeTree from './pages/pedigree/PedigreeTree';
+import ReportsList from './pages/reports/ReportsList';
 
 /**
  * App component with routing.
@@ -62,6 +64,9 @@ function App() {
 					element={ <WeightChart /> }
 				/>
 				<Route path="/calendar" element={ <Calendar /> } />
+				<Route path="/pedigree" element={ <PedigreeTree /> } />
+				<Route path="/pedigree/:id" element={ <PedigreeTree /> } />
+				<Route path="/reports" element={ <ReportsList /> } />
 				<Route path="*" element={ <Navigate to="/" replace /> } />
 			</Routes>
 		</HashRouter>
