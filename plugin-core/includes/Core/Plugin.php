@@ -76,6 +76,10 @@ class Plugin {
 		// Register Reproduction controller.
 		$reproduction_controller = new \CanilCore\Rest\Controllers\ReproductionController();
 		$reproduction_controller->register_routes();
+
+		// Register Health controller.
+		$health_controller = new \CanilCore\Rest\Controllers\HealthController();
+		$health_controller->register_routes();
 	}
 
 	/**
