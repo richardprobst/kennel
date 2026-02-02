@@ -118,6 +118,66 @@ function Dashboard() {
 						</Link>
 					</CardBody>
 				</Card>
+
+				<Card>
+					<CardHeader>
+						<h2>{ __( 'Saúde', 'canil-core' ) }</h2>
+					</CardHeader>
+					<CardBody>
+						<p>
+							{ __(
+								'Registre vacinas, vermífugos, exames e medicações.',
+								'canil-core'
+							) }
+						</p>
+						<Link
+							to="/health"
+							className="components-button is-primary"
+						>
+							{ __( 'Ver Saúde', 'canil-core' ) }
+						</Link>
+					</CardBody>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<h2>{ __( 'Pesagens', 'canil-core' ) }</h2>
+					</CardHeader>
+					<CardBody>
+						<p>
+							{ __(
+								'Acompanhe a evolução de peso dos animais.',
+								'canil-core'
+							) }
+						</p>
+						<Link
+							to="/weighing"
+							className="components-button is-primary"
+						>
+							{ __( 'Ver Pesagens', 'canil-core' ) }
+						</Link>
+					</CardBody>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<h2>{ __( 'Agenda', 'canil-core' ) }</h2>
+					</CardHeader>
+					<CardBody>
+						<p>
+							{ __(
+								'Visualize eventos e lembretes no calendário.',
+								'canil-core'
+							) }
+						</p>
+						<Link
+							to="/calendar"
+							className="components-button is-primary"
+						>
+							{ __( 'Ver Agenda', 'canil-core' ) }
+						</Link>
+					</CardBody>
+				</Card>
 			</div>
 		</div>
 	);

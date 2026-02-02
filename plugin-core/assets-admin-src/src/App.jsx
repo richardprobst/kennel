@@ -16,6 +16,13 @@ import PersonList from './pages/people/PersonList';
 import PersonForm from './pages/people/PersonForm';
 import MatingForm from './pages/reproduction/MatingForm';
 import BirthForm from './pages/reproduction/BirthForm';
+import HealthList from './pages/health/HealthList';
+import HealthForm from './pages/health/HealthForm';
+import WeighingList from './pages/weighing/WeighingList';
+import WeighingForm from './pages/weighing/WeighingForm';
+import BatchWeighing from './pages/weighing/BatchWeighing';
+import WeightChart from './pages/weighing/WeightChart';
+import Calendar from './pages/calendar/Calendar';
 
 /**
  * App component with routing.
@@ -44,6 +51,17 @@ function App() {
 					path="/reproduction/birth/:litterId"
 					element={ <BirthForm /> }
 				/>
+				<Route path="/health" element={ <HealthList /> } />
+				<Route path="/health/new" element={ <HealthForm /> } />
+				<Route path="/health/:id" element={ <HealthForm /> } />
+				<Route path="/weighing" element={ <WeighingList /> } />
+				<Route path="/weighing/new" element={ <WeighingForm /> } />
+				<Route path="/weighing/batch" element={ <BatchWeighing /> } />
+				<Route
+					path="/weighing/chart/:entityType/:entityId"
+					element={ <WeightChart /> }
+				/>
+				<Route path="/calendar" element={ <Calendar /> } />
 				<Route path="*" element={ <Navigate to="/" replace /> } />
 			</Routes>
 		</HashRouter>

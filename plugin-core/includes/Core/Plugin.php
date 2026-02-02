@@ -76,6 +76,18 @@ class Plugin {
 		// Register Reproduction controller.
 		$reproduction_controller = new \CanilCore\Rest\Controllers\ReproductionController();
 		$reproduction_controller->register_routes();
+
+		// Register Health controller.
+		$health_controller = new \CanilCore\Rest\Controllers\HealthController();
+		$health_controller->register_routes();
+
+		// Register Weighing controller.
+		$weighing_controller = new \CanilCore\Rest\Controllers\WeighingController();
+		$weighing_controller->register_routes();
+
+		// Register Calendar controller.
+		$calendar_controller = new \CanilCore\Rest\Controllers\CalendarController();
+		$calendar_controller->register_routes();
 	}
 
 	/**
@@ -139,6 +151,33 @@ class Plugin {
 			__( 'Pessoas', 'canil-core' ),
 			'manage_people',
 			'canil-people',
+			array( $this, 'render_admin_page' )
+		);
+
+		add_submenu_page(
+			'canil-dashboard',
+			__( 'Saúde', 'canil-core' ),
+			__( 'Saúde', 'canil-core' ),
+			'manage_kennel',
+			'canil-health',
+			array( $this, 'render_admin_page' )
+		);
+
+		add_submenu_page(
+			'canil-dashboard',
+			__( 'Pesagens', 'canil-core' ),
+			__( 'Pesagens', 'canil-core' ),
+			'manage_kennel',
+			'canil-weighing',
+			array( $this, 'render_admin_page' )
+		);
+
+		add_submenu_page(
+			'canil-dashboard',
+			__( 'Agenda', 'canil-core' ),
+			__( 'Agenda', 'canil-core' ),
+			'manage_kennel',
+			'canil-calendar',
 			array( $this, 'render_admin_page' )
 		);
 	}
