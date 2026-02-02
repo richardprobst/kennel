@@ -1,0 +1,26 @@
+/**
+ * Admin styles for Canil Site Público.
+ *
+ * @package CanilSitePublico
+ */
+
+/* Settings page improvements */
+.wrap h2.title {
+	margin-top: 2rem;
+	padding-top: 1rem;
+	border-top: 1px solid #ddd;
+}
+
+.wrap h2.title:first-of-type {
+	margin-top: 0;
+	padding-top: 0;
+	border-top: none;
+}
+
+/* Shortcodes table */
+.wrap table.wp-list-table code {
+	background: #f0f0f0;
+	padding: 0.2rem 0.4rem;
+	border-radius: 3px;
+	font-size: 0.9em;
+}

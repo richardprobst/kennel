@@ -1,0 +1,623 @@
+/**
+ * Frontend styles for Canil Site Público.
+ *
+ * @package CanilSitePublico
+ */
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+:root {
+	--canil-primary: #2271b1;
+	--canil-primary-hover: #135e96;
+	--canil-secondary: #1e1e1e;
+	--canil-text: #333;
+	--canil-text-light: #666;
+	--canil-border: #ddd;
+	--canil-background: #f9f9f9;
+	--canil-white: #fff;
+	--canil-success: #00a32a;
+	--canil-error: #d63638;
+	--canil-spacing: 1rem;
+	--canil-radius: 4px;
+}
+
+/* ==========================================================================
+   Kennel Info
+   ========================================================================== */
+
+.canil-info {
+	margin-bottom: calc(var(--canil-spacing) * 2);
+}
+
+.canil-info__name {
+	font-size: 2rem;
+	margin-bottom: var(--canil-spacing);
+	color: var(--canil-secondary);
+}
+
+.canil-info__description {
+	margin-bottom: calc(var(--canil-spacing) * 1.5);
+	line-height: 1.7;
+}
+
+.canil-info__contact,
+.canil-info__social {
+	margin-bottom: calc(var(--canil-spacing) * 1.5);
+}
+
+.canil-info__contact h3,
+.canil-info__social h3 {
+	font-size: 1.25rem;
+	margin-bottom: calc(var(--canil-spacing) * 0.75);
+	color: var(--canil-secondary);
+}
+
+.canil-info__contact-list,
+.canil-info__social-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.canil-info__contact-list li,
+.canil-info__social-list li {
+	display: flex;
+	align-items: flex-start;
+	gap: calc(var(--canil-spacing) * 0.5);
+	margin-bottom: calc(var(--canil-spacing) * 0.5);
+}
+
+.canil-info__contact-list .dashicons,
+.canil-info__social-list .dashicons {
+	color: var(--canil-primary);
+	flex-shrink: 0;
+}
+
+.canil-info__contact-list a,
+.canil-info__social-list a {
+	color: var(--canil-primary);
+	text-decoration: none;
+}
+
+.canil-info__contact-list a:hover,
+.canil-info__social-list a:hover {
+	text-decoration: underline;
+}
+
+/* ==========================================================================
+   Puppies List
+   ========================================================================== */
+
+.canil-puppies {
+	margin-bottom: calc(var(--canil-spacing) * 2);
+}
+
+.canil-puppies__filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--canil-spacing);
+	margin-bottom: calc(var(--canil-spacing) * 1.5);
+	padding: var(--canil-spacing);
+	background: var(--canil-background);
+	border-radius: var(--canil-radius);
+}
+
+.canil-puppies__filter {
+	display: flex;
+	flex-direction: column;
+	gap: calc(var(--canil-spacing) * 0.25);
+}
+
+.canil-puppies__filter label {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--canil-text-light);
+}
+
+.canil-puppies__filter select {
+	padding: calc(var(--canil-spacing) * 0.5) calc(var(--canil-spacing) * 0.75);
+	border: 1px solid var(--canil-border);
+	border-radius: var(--canil-radius);
+	min-width: 150px;
+}
+
+.canil-puppies__empty {
+	text-align: center;
+	padding: calc(var(--canil-spacing) * 3);
+	background: var(--canil-background);
+	border-radius: var(--canil-radius);
+}
+
+.canil-puppies__empty p {
+	margin: calc(var(--canil-spacing) * 0.5) 0;
+	color: var(--canil-text-light);
+}
+
+.canil-puppies__grid {
+	display: grid;
+	grid-template-columns: repeat(var(--columns, 3), 1fr);
+	gap: calc(var(--canil-spacing) * 1.5);
+}
+
+@media (max-width: 768px) {
+	.canil-puppies__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 480px) {
+	.canil-puppies__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ==========================================================================
+   Puppy Card
+   ========================================================================== */
+
+.canil-puppy-card {
+	background: var(--canil-white);
+	border: 1px solid var(--canil-border);
+	border-radius: var(--canil-radius);
+	overflow: hidden;
+	transition: box-shadow 0.2s ease;
+}
+
+.canil-puppy-card:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.canil-puppy-card__image {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	background: var(--canil-background);
+}
+
+.canil-puppy-card__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.canil-puppy-card__placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	color: var(--canil-border);
+}
+
+.canil-puppy-card__placeholder .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+}
+
+.canil-puppy-card__badge {
+	position: absolute;
+	top: var(--canil-spacing);
+	right: var(--canil-spacing);
+	padding: calc(var(--canil-spacing) * 0.25) calc(var(--canil-spacing) * 0.5);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	border-radius: var(--canil-radius);
+}
+
+.canil-puppy-card__badge--reserved {
+	background: #ffecd2;
+	color: #c87000;
+}
+
+.canil-puppy-card__content {
+	padding: var(--canil-spacing);
+}
+
+.canil-puppy-card__name {
+	font-size: 1.125rem;
+	margin: 0 0 calc(var(--canil-spacing) * 0.5);
+}
+
+.canil-puppy-card__name a {
+	color: var(--canil-secondary);
+	text-decoration: none;
+}
+
+.canil-puppy-card__name a:hover {
+	color: var(--canil-primary);
+}
+
+.canil-puppy-card__details {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 calc(var(--canil-spacing) * 0.75);
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(var(--canil-spacing) * 0.5);
+}
+
+.canil-puppy-card__details li {
+	font-size: 0.875rem;
+	color: var(--canil-text-light);
+}
+
+.canil-puppy-card__details li:not(:last-child)::after {
+	content: "•";
+	margin-left: calc(var(--canil-spacing) * 0.5);
+}
+
+.canil-puppy-card__price {
+	font-size: 1.125rem;
+	font-weight: 600;
+	color: var(--canil-success);
+	margin-bottom: calc(var(--canil-spacing) * 0.75);
+}
+
+.canil-puppy-card__link {
+	display: inline-block;
+	color: var(--canil-primary);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.canil-puppy-card__link:hover {
+	text-decoration: underline;
+}
+
+/* ==========================================================================
+   Puppy Detail
+   ========================================================================== */
+
+.canil-puppy-detail {
+	margin-bottom: calc(var(--canil-spacing) * 2);
+}
+
+.canil-puppy-detail__main {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: calc(var(--canil-spacing) * 2);
+	margin-bottom: calc(var(--canil-spacing) * 2);
+}
+
+@media (max-width: 768px) {
+	.canil-puppy-detail__main {
+		grid-template-columns: 1fr;
+	}
+}
+
+.canil-puppy-detail__photo {
+	border-radius: var(--canil-radius);
+	overflow: hidden;
+}
+
+.canil-puppy-detail__photo img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.canil-puppy-detail__placeholder {
+	aspect-ratio: 4 / 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--canil-background);
+	border-radius: var(--canil-radius);
+	color: var(--canil-border);
+}
+
+.canil-puppy-detail__placeholder .dashicons {
+	font-size: 64px;
+	width: 64px;
+	height: 64px;
+}
+
+.canil-puppy-detail__gallery {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: calc(var(--canil-spacing) * 0.5);
+	margin-top: var(--canil-spacing);
+}
+
+.canil-puppy-detail__gallery-item {
+	aspect-ratio: 1;
+	border-radius: var(--canil-radius);
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.canil-puppy-detail__gallery-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.2s ease;
+}
+
+.canil-puppy-detail__gallery-item:hover img {
+	transform: scale(1.05);
+}
+
+.canil-puppy-detail__header {
+	display: flex;
+	align-items: center;
+	gap: var(--canil-spacing);
+	margin-bottom: var(--canil-spacing);
+}
+
+.canil-puppy-detail__name {
+	font-size: 2rem;
+	margin: 0;
+}
+
+.canil-puppy-detail__badge {
+	padding: calc(var(--canil-spacing) * 0.25) calc(var(--canil-spacing) * 0.75);
+	font-size: 0.875rem;
+	font-weight: 600;
+	border-radius: var(--canil-radius);
+}
+
+.canil-puppy-detail__badge--reserved {
+	background: #ffecd2;
+	color: #c87000;
+}
+
+.canil-puppy-detail__badge--sold {
+	background: #f0f0f0;
+	color: #666;
+}
+
+.canil-puppy-detail__specs {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: calc(var(--canil-spacing) * 0.5) var(--canil-spacing);
+	margin-bottom: calc(var(--canil-spacing) * 1.5);
+}
+
+.canil-puppy-detail__specs dt {
+	font-weight: 500;
+	color: var(--canil-text-light);
+}
+
+.canil-puppy-detail__specs dd {
+	margin: 0;
+}
+
+.canil-puppy-detail__price {
+	font-size: 1.5rem;
+	margin-bottom: var(--canil-spacing);
+}
+
+.canil-puppy-detail__price-label {
+	color: var(--canil-text-light);
+}
+
+.canil-puppy-detail__price-value {
+	font-weight: 600;
+	color: var(--canil-success);
+}
+
+.canil-puppy-detail__notes {
+	margin-bottom: calc(var(--canil-spacing) * 1.5);
+	padding: var(--canil-spacing);
+	background: var(--canil-background);
+	border-radius: var(--canil-radius);
+}
+
+.canil-puppy-detail__cta {
+	margin-top: calc(var(--canil-spacing) * 1.5);
+}
+
+/* Parents section */
+.canil-puppy-detail__parents {
+	margin-bottom: calc(var(--canil-spacing) * 2);
+	padding: calc(var(--canil-spacing) * 1.5);
+	background: var(--canil-background);
+	border-radius: var(--canil-radius);
+}
+
+.canil-puppy-detail__parents h2 {
+	margin: 0 0 var(--canil-spacing);
+	font-size: 1.25rem;
+}
+
+.canil-puppy-detail__parents-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: calc(var(--canil-spacing) * 1.5);
+}
+
+@media (max-width: 480px) {
+	.canil-puppy-detail__parents-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.canil-puppy-detail__parent h3 {
+	font-size: 0.875rem;
+	color: var(--canil-text-light);
+	margin: 0 0 calc(var(--canil-spacing) * 0.5);
+	text-transform: uppercase;
+}
+
+.canil-parent-card {
+	display: flex;
+	gap: var(--canil-spacing);
+	padding: var(--canil-spacing);
+	background: var(--canil-white);
+	border-radius: var(--canil-radius);
+}
+
+.canil-parent-card__photo {
+	width: 80px;
+	height: 80px;
+	border-radius: var(--canil-radius);
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.canil-parent-card__photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.canil-parent-card__info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.canil-parent-card__name {
+	font-weight: 600;
+}
+
+.canil-parent-card__breed {
+	font-size: 0.875rem;
+	color: var(--canil-text-light);
+}
+
+/* Interest section */
+.canil-puppy-detail__interest {
+	margin-bottom: calc(var(--canil-spacing) * 2);
+}
+
+.canil-puppy-detail__interest h2 {
+	margin: 0 0 var(--canil-spacing);
+	font-size: 1.5rem;
+}
+
+/* ==========================================================================
+   Interest Form
+   ========================================================================== */
+
+.canil-interest-form {
+	max-width: 600px;
+}
+
+.canil-form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--canil-spacing);
+}
+
+.canil-form__group {
+	display: flex;
+	flex-direction: column;
+	gap: calc(var(--canil-spacing) * 0.25);
+}
+
+.canil-form__label {
+	font-weight: 500;
+}
+
+.canil-form__label .required {
+	color: var(--canil-error);
+}
+
+.canil-form__input,
+.canil-form__textarea {
+	padding: calc(var(--canil-spacing) * 0.75);
+	border: 1px solid var(--canil-border);
+	border-radius: var(--canil-radius);
+	font-size: 1rem;
+	font-family: inherit;
+}
+
+.canil-form__input:focus,
+.canil-form__textarea:focus {
+	border-color: var(--canil-primary);
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.2);
+}
+
+.canil-form__group--checkbox {
+	flex-direction: row;
+	align-items: flex-start;
+	gap: calc(var(--canil-spacing) * 0.5);
+}
+
+.canil-form__checkbox {
+	display: flex;
+	align-items: flex-start;
+	gap: calc(var(--canil-spacing) * 0.5);
+	cursor: pointer;
+}
+
+.canil-form__checkbox input[type="checkbox"] {
+	margin-top: 0.25em;
+}
+
+.canil-form__group--submit {
+	margin-top: calc(var(--canil-spacing) * 0.5);
+}
+
+.canil-form__messages {
+	margin-top: var(--canil-spacing);
+}
+
+.canil-form__success {
+	padding: var(--canil-spacing);
+	background: #d4edda;
+	color: #155724;
+	border-radius: var(--canil-radius);
+}
+
+.canil-form__error {
+	padding: var(--canil-spacing);
+	background: #f8d7da;
+	color: #721c24;
+	border-radius: var(--canil-radius);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.canil-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: calc(var(--canil-spacing) * 0.5);
+	padding: calc(var(--canil-spacing) * 0.75) calc(var(--canil-spacing) * 1.5);
+	font-size: 1rem;
+	font-weight: 500;
+	text-decoration: none;
+	border: none;
+	border-radius: var(--canil-radius);
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.canil-button--primary {
+	background: var(--canil-primary);
+	color: var(--canil-white);
+}
+
+.canil-button--primary:hover {
+	background: var(--canil-primary-hover);
+}
+
+.canil-button--primary:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Utility
+   ========================================================================== */
+
+.canil-error {
+	padding: var(--canil-spacing);
+	background: #f8d7da;
+	color: #721c24;
+	border-radius: var(--canil-radius);
+}
+
+/* Hide filtered items */
+.canil-puppy-card[data-hidden="true"] {
+	display: none;
+}
