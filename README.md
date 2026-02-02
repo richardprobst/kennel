@@ -56,11 +56,8 @@ cd kennel
 cd plugin-core
 composer install
 
-# Instale dependências JS
-cd assets-admin-src
+# Instale dependências JS e build do admin
 npm install
-
-# Build do admin
 npm run build
 
 # Ou modo watch para desenvolvimento

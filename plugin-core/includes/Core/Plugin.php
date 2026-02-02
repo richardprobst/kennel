@@ -241,7 +241,7 @@ class Plugin {
 
 			wp_enqueue_style(
 				'canil-admin',
-				CANIL_CORE_URL . 'assets-admin/index.css',
+				CANIL_CORE_URL . 'assets-admin/style-index.css',
 				array( 'wp-components' ),
 				$asset['version']
 			);

@@ -82,16 +82,16 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm'
-          cache-dependency-path: plugin-core/assets-admin-src/package-lock.json
+          cache-dependency-path: plugin-core/package-lock.json
       
       - name: Install dependencies
         run: |
-          cd plugin-core/assets-admin-src
+          cd plugin-core
           npm ci || npm install
       
       - name: Run ESLint
         run: |
-          cd plugin-core/assets-admin-src
+          cd plugin-core
           npm run lint || true
 
   build:
@@ -106,17 +106,17 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm'
-          cache-dependency-path: plugin-core/assets-admin-src/package-lock.json
+          cache-dependency-path: plugin-core/package-lock.json
       
       - name: Install dependencies
         run: |
-          cd plugin-core/assets-admin-src
+          cd plugin-core
           npm ci || npm install
       
       - name: Build
         run: |
-          cd plugin-core/assets-admin-src
-          npm run build || echo "Build script not configured yet"
+          cd plugin-core
+          npm run build
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
