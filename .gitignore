@@ -4,3 +4,5 @@ plugin-core/vendor/
 plugin-core/assets-admin/
 composer.lock
 plugin-core/composer.lock
+.phpunit.result.cache
+plugin-core/.phpunit.result.cache
