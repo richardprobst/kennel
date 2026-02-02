@@ -61,6 +61,26 @@ function Dashboard() {
 
 				<Card>
 					<CardHeader>
+						<h2>{ __( 'Reprodução', 'canil-core' ) }</h2>
+					</CardHeader>
+					<CardBody>
+						<p>
+							{ __(
+								'Registre coberturas e gerencie o fluxo reprodutivo.',
+								'canil-core'
+							) }
+						</p>
+						<Link
+							to="/reproduction/mating"
+							className="components-button is-primary"
+						>
+							{ __( 'Nova Cobertura', 'canil-core' ) }
+						</Link>
+					</CardBody>
+				</Card>
+
+				<Card>
+					<CardHeader>
 						<h2>{ __( 'Filhotes', 'canil-core' ) }</h2>
 					</CardHeader>
 					<CardBody>

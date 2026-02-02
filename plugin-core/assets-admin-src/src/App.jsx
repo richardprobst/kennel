@@ -14,6 +14,8 @@ import PuppyList from './pages/puppies/PuppyList';
 import PuppyForm from './pages/puppies/PuppyForm';
 import PersonList from './pages/people/PersonList';
 import PersonForm from './pages/people/PersonForm';
+import MatingForm from './pages/reproduction/MatingForm';
+import BirthForm from './pages/reproduction/BirthForm';
 
 /**
  * App component with routing.
@@ -37,6 +39,11 @@ function App() {
 				<Route path="/people" element={ <PersonList /> } />
 				<Route path="/people/new" element={ <PersonForm /> } />
 				<Route path="/people/:id" element={ <PersonForm /> } />
+				<Route path="/reproduction/mating" element={ <MatingForm /> } />
+				<Route
+					path="/reproduction/birth/:litterId"
+					element={ <BirthForm /> }
+				/>
 				<Route path="*" element={ <Navigate to="/" replace /> } />
 			</Routes>
 		</HashRouter>
