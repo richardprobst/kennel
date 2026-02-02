@@ -53,7 +53,11 @@ class Plugin {
 	 * Register REST API routes.
 	 */
 	public function register_rest_routes(): void {
-		// REST routes will be registered here in Phase 2.
+		// Register Dogs controller.
+		$dogs_controller = new \CanilCore\Rest\Controllers\DogsController();
+		$dogs_controller->register_routes();
+
+		// Additional controllers will be registered here.
 	}
 
 	/**
