@@ -35,6 +35,6 @@ class Deactivator {
 	 */
 	private static function clear_scheduled_events(): void {
 		// Clear any scheduled hooks here when implemented.
-		// Example: wp_clear_scheduled_hook( 'canil_core_daily_cleanup' );
+		// Example: wp_clear_scheduled_hook( 'canil_core_daily_cleanup' ).
 	}
 }

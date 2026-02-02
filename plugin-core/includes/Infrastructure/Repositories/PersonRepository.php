@@ -150,13 +150,13 @@ class PersonRepository extends BaseRepository {
 	public function find_for_dropdown( string $type = '' ): array {
 		$tenant_id = $this->get_tenant_id();
 
-		$query = "SELECT id, name, phone, type FROM {$this->table} 
+		$query  = "SELECT id, name, phone, type FROM {$this->table} 
 				  WHERE tenant_id = %d 
 				  AND deleted_at IS NULL";
 		$params = array( $tenant_id );
 
 		if ( ! empty( $type ) ) {
-			$query .= ' AND type = %s';
+			$query   .= ' AND type = %s';
 			$params[] = $type;
 		}
 

@@ -354,8 +354,8 @@ class LittersController extends BaseController {
 
 			// Auto-calculate expected birth date if mating date is provided.
 			if ( ! empty( $data['mating_date'] ) && empty( $data['expected_birth_date'] ) ) {
-				$mating    = new \DateTimeImmutable( $data['mating_date'] );
-				$expected  = $mating->modify( '+63 days' );
+				$mating                      = new \DateTimeImmutable( $data['mating_date'] );
+				$expected                    = $mating->modify( '+63 days' );
 				$data['expected_birth_date'] = $expected->format( 'Y-m-d' );
 			}
 

@@ -153,7 +153,7 @@ class Plugin {
 	 */
 	public function enqueue_admin_assets( string $hook_suffix ): void {
 		// Only load on our admin pages.
-		if ( strpos( $hook_suffix, 'canil-' ) === false && $hook_suffix !== 'toplevel_page_canil-dashboard' ) {
+		if ( false === strpos( $hook_suffix, 'canil-' ) && 'toplevel_page_canil-dashboard' !== $hook_suffix ) {
 			return;
 		}
 
@@ -182,8 +182,8 @@ class Plugin {
 				'canil-admin',
 				'canilAdmin',
 				array(
-					'apiUrl'  => rest_url( 'canil/v1' ),
-					'nonce'   => wp_create_nonce( 'wp_rest' ),
+					'apiUrl'   => rest_url( 'canil/v1' ),
+					'nonce'    => wp_create_nonce( 'wp_rest' ),
 					'adminUrl' => admin_url(),
 				)
 			);

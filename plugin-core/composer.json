@@ -29,8 +29,8 @@
 		}
 	},
 	"scripts": {
-		"lint": "phpcs --standard=WordPress includes/ --extensions=php",
-		"lint:fix": "phpcbf --standard=WordPress includes/ --extensions=php",
+		"lint": "phpcs",
+		"lint:fix": "phpcbf",
 		"test": "phpunit",
 		"test:coverage": "phpunit --coverage-html coverage"
 	},

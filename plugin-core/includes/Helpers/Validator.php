@@ -52,7 +52,8 @@ class Validator {
 	public function required( string $field, string $message = '' ): self {
 		$value = $this->get_value( $field );
 
-		if ( empty( $value ) && $value !== '0' && $value !== 0 ) {
+		if ( empty( $value ) && '0' !== $value && 0 !== $value ) {
+			/* translators: %s: field name */
 			$this->add_error( $field, $message ?: sprintf( __( 'O campo %s é obrigatório.', 'canil-core' ), $field ) );
 		}
 
@@ -90,7 +91,8 @@ class Validator {
 		if ( is_string( $value ) && strlen( $value ) < $min ) {
 			$this->add_error(
 				$field,
-				$message ?: sprintf( __( 'O campo %s deve ter no mínimo %d caracteres.', 'canil-core' ), $field, $min )
+				/* translators: 1: field name, 2: minimum length */
+				$message ?: sprintf( __( 'O campo %1$s deve ter no mínimo %2$d caracteres.', 'canil-core' ), $field, $min )
 			);
 		}
 
@@ -111,7 +113,8 @@ class Validator {
 		if ( is_string( $value ) && strlen( $value ) > $max ) {
 			$this->add_error(
 				$field,
-				$message ?: sprintf( __( 'O campo %s deve ter no máximo %d caracteres.', 'canil-core' ), $field, $max )
+				/* translators: 1: field name, 2: maximum length */
+				$message ?: sprintf( __( 'O campo %1$s deve ter no máximo %2$d caracteres.', 'canil-core' ), $field, $max )
 			);
 		}
 
@@ -154,6 +157,7 @@ class Validator {
 		if ( ! empty( $value ) && ! in_array( $value, $allowed, true ) ) {
 			$this->add_error(
 				$field,
+				/* translators: %s: field name */
 				$message ?: sprintf( __( 'O valor do campo %s é inválido.', 'canil-core' ), $field )
 			);
 		}
@@ -174,6 +178,7 @@ class Validator {
 		if ( ! empty( $value ) && ! is_numeric( $value ) ) {
 			$this->add_error(
 				$field,
+				/* translators: %s: field name */
 				$message ?: sprintf( __( 'O campo %s deve ser numérico.', 'canil-core' ), $field )
 			);
 		}
@@ -194,6 +199,7 @@ class Validator {
 		if ( ! empty( $value ) && ( ! is_numeric( $value ) || (int) $value <= 0 ) ) {
 			$this->add_error(
 				$field,
+				/* translators: %s: field name */
 				$message ?: sprintf( __( 'O campo %s deve ser um número inteiro positivo.', 'canil-core' ), $field )
 			);
 		}

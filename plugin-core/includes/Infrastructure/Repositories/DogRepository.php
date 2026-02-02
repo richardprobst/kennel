@@ -121,14 +121,14 @@ class DogRepository extends BaseRepository {
 	public function find_for_breeding( string $sex = '' ): array {
 		$tenant_id = $this->get_tenant_id();
 
-		$query = "SELECT id, name, registration_number FROM {$this->table} 
+		$query  = "SELECT id, name, registration_number FROM {$this->table} 
 				  WHERE tenant_id = %d 
 				  AND deleted_at IS NULL 
 				  AND status IN ('active', 'breeding')";
 		$params = array( $tenant_id );
 
 		if ( ! empty( $sex ) ) {
-			$query .= ' AND sex = %s';
+			$query   .= ' AND sex = %s';
 			$params[] = $sex;
 		}
 

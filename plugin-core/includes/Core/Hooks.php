@@ -55,27 +55,27 @@ class Hooks {
 	public function get_default_event_types( array $types ): array {
 		$defaults = array(
 			// Reproduction.
-			'heat'             => __( 'Cio', 'canil-core' ),
-			'mating'           => __( 'Cobertura/Inseminação', 'canil-core' ),
-			'pregnancy_test'   => __( 'Teste de Gestação', 'canil-core' ),
-			'birth'            => __( 'Nascimento', 'canil-core' ),
+			'heat'           => __( 'Cio', 'canil-core' ),
+			'mating'         => __( 'Cobertura/Inseminação', 'canil-core' ),
+			'pregnancy_test' => __( 'Teste de Gestação', 'canil-core' ),
+			'birth'          => __( 'Nascimento', 'canil-core' ),
 
 			// Health.
-			'vaccine'          => __( 'Vacina', 'canil-core' ),
-			'deworming'        => __( 'Vermífugo', 'canil-core' ),
-			'exam'             => __( 'Exame', 'canil-core' ),
-			'medication'       => __( 'Medicação', 'canil-core' ),
-			'surgery'          => __( 'Cirurgia', 'canil-core' ),
-			'vet_visit'        => __( 'Consulta Veterinária', 'canil-core' ),
+			'vaccine'        => __( 'Vacina', 'canil-core' ),
+			'deworming'      => __( 'Vermífugo', 'canil-core' ),
+			'exam'           => __( 'Exame', 'canil-core' ),
+			'medication'     => __( 'Medicação', 'canil-core' ),
+			'surgery'        => __( 'Cirurgia', 'canil-core' ),
+			'vet_visit'      => __( 'Consulta Veterinária', 'canil-core' ),
 
 			// Weighing.
-			'weighing'         => __( 'Pesagem', 'canil-core' ),
+			'weighing'       => __( 'Pesagem', 'canil-core' ),
 
 			// Other.
-			'grooming'         => __( 'Banho/Tosa', 'canil-core' ),
-			'training'         => __( 'Treino', 'canil-core' ),
-			'show'             => __( 'Exposição', 'canil-core' ),
-			'note'             => __( 'Anotação', 'canil-core' ),
+			'grooming'       => __( 'Banho/Tosa', 'canil-core' ),
+			'training'       => __( 'Treino', 'canil-core' ),
+			'show'           => __( 'Exposição', 'canil-core' ),
+			'note'           => __( 'Anotação', 'canil-core' ),
 		);
 
 		return array_merge( $defaults, $types );
