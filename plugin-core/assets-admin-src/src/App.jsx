@@ -16,6 +16,8 @@ import PersonList from './pages/people/PersonList';
 import PersonForm from './pages/people/PersonForm';
 import MatingForm from './pages/reproduction/MatingForm';
 import BirthForm from './pages/reproduction/BirthForm';
+import HealthList from './pages/health/HealthList';
+import HealthForm from './pages/health/HealthForm';
 
 /**
  * App component with routing.
@@ -44,6 +46,9 @@ function App() {
 					path="/reproduction/birth/:litterId"
 					element={ <BirthForm /> }
 				/>
+				<Route path="/health" element={ <HealthList /> } />
+				<Route path="/health/new" element={ <HealthForm /> } />
+				<Route path="/health/:id" element={ <HealthForm /> } />
 				<Route path="*" element={ <Navigate to="/" replace /> } />
 			</Routes>
 		</HashRouter>
