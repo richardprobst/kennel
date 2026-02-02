@@ -126,7 +126,7 @@ if ( isset( $_POST['canil_site_publico_save'] ) && check_admin_referer( 'canil_s
 				<td>
 					<input type="text" id="kennel_instagram" name="kennel_instagram" class="regular-text" 
 						value="<?php echo esc_attr( $settings['kennel_instagram'] ?? '' ); ?>"
-						placeholder="@seucabenel">
+						placeholder="@seucanil">
 					<p class="description"><?php esc_html_e( 'Nome de usuário (com ou sem @).', 'canil-site-publico' ); ?></p>
 				</td>
 			</tr>
