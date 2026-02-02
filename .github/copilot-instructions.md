@@ -143,6 +143,40 @@ apply_filters('canil_core_dog_statuses', $statuses);
 - [ ] CI passando
 - [ ] Docs atualizadas quando muda API/DB/fluxos
 - [ ] Sem mudanças silenciosas (changelog/nota no PR)
+- [ ] **Código segue princípios DRY** (sem duplicação)
+- [ ] **Classes base reutilizadas** (BaseRepository, BaseController)
+
+## Princípios DRY (OBRIGATÓRIO)
+
+- **Código duplicado = código errado**: Extrair para funções/classes/traits
+- **Usar classes base**: `BaseRepository`, `BaseController` para CRUD
+- **Constantes centralizadas**: `Constants/DogStatus`, `Constants/EventType`
+- **Helpers reutilizáveis**: `Helpers/Sanitizer`, `Helpers/Validator`
+- **Componentes React reutilizáveis**: `components/common/`
+
+```php
+// ❌ ERRADO: Código duplicado em cada controller
+class DogsController {
+    public function list() {
+        if (!is_user_logged_in()) { return error; }
+        if (!current_user_can('manage_dogs')) { return error; }
+        // ...
+    }
+}
+
+// ✅ CORRETO: Herdar de BaseController
+class DogsController extends BaseController {
+    protected string $capability = 'manage_dogs';
+    // Herda checkPermission() automaticamente
+}
+```
+
+## Anti-Patterns a Evitar
+
+- **Magic numbers/strings**: Usar constantes (`DogStatus::ACTIVE`)
+- **God classes**: Separar responsabilidades
+- **Código duplicado**: Extrair para classes base
+- **tenant_id do cliente**: SEMPRE `get_current_user_id()`
 
 ## Testes obrigatórios (mínimo)
 
@@ -170,3 +204,6 @@ Ver pasta `docs/` para:
 - `DB.md` - Modelo de dados
 - `API.md` - Especificação REST
 - `UX.md` - Guia de interface
+- `PADROES.md` - **Padrões de desenvolvimento (DRY, SOLID)**
+- `SEGURANCA.md` - **Guia de segurança detalhado**
+- `MELHORIAS.md` - Sugestões de melhorias

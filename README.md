@@ -84,16 +84,31 @@ npm run wp-env:start
 | [DB.md](docs/DB.md) | Modelo de Dados |
 | [API.md](docs/API.md) | Especificação REST API |
 | [UX.md](docs/UX.md) | Guia de Experiência do Usuário |
+| [PADROES.md](docs/PADROES.md) | **Padrões de Desenvolvimento (DRY, SOLID)** |
+| [SEGURANCA.md](docs/SEGURANCA.md) | **Guia de Segurança Detalhado** |
 | [MELHORIAS.md](docs/MELHORIAS.md) | Sugestões de Melhorias |
+
+## 🎯 Princípios de Desenvolvimento
+
+Este projeto segue rigorosamente os seguintes princípios:
+
+- **DRY** (Don't Repeat Yourself) - Código duplicado = código errado
+- **SOLID** - Separação de responsabilidades, extensibilidade via hooks
+- **KISS** (Keep It Simple) - Soluções simples que funcionam
+- **YAGNI** (You Aren't Gonna Need It) - Sem código especulativo
+
+Ver [PADROES.md](docs/PADROES.md) para guia completo.
 
 ## 🔒 Segurança (Multi-tenant)
 
-Este plugin opera em modo **SaaS multi-tenant**:
+Este plugin opera em modo **SaaS multi-tenant** com múltiplas camadas de segurança:
 
-- Cada usuário WordPress = 1 Tenant/Canil
-- **Isolamento total** de dados entre tenants
-- `tenant_id` é **SEMPRE** obtido do servidor (`get_current_user_id()`)
-- **NUNCA** aceitar `tenant_id` do cliente
+1. **Autenticação** - WordPress Authentication (cookies + nonces)
+2. **Autorização** - Capabilities específicas por funcionalidade
+3. **Isolamento Tenant** - Toda query filtra por `tenant_id`
+4. **Validação** - Schema validation + type checking
+5. **Sanitização** - `sanitize_*` na entrada, `esc_*` na saída
+6. **Auditoria** - Log de operações críticas
 
 ```php
 // ✅ CORRETO
@@ -102,6 +117,8 @@ $tenantId = get_current_user_id();
 // ❌ PROIBIDO
 $tenantId = $request->get_param('tenant_id');
 ```
+
+Ver [SEGURANCA.md](docs/SEGURANCA.md) para guia completo de segurança.
 
 ## 🧪 Testes
 
