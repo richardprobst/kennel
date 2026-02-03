@@ -246,14 +246,19 @@ class Plugin {
 				$asset['version']
 			);
 
-			// Localize script with REST API info.
+			// Get the current page slug from the query string.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No action, just reading page slug.
+			$current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : 'canil-dashboard';
+
+			// Localize script with REST API info and current page.
 			wp_localize_script(
 				'canil-admin',
 				'canilAdmin',
 				array(
-					'apiUrl'   => rest_url( 'canil/v1' ),
-					'nonce'    => wp_create_nonce( 'wp_rest' ),
-					'adminUrl' => admin_url(),
+					'apiUrl'      => rest_url( 'canil/v1' ),
+					'nonce'       => wp_create_nonce( 'wp_rest' ),
+					'adminUrl'    => admin_url(),
+					'currentPage' => $current_page,
 				)
 			);
 		}
